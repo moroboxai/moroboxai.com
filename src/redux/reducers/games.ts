@@ -8,7 +8,12 @@ const initialState: {
 export default (state = initialState, action: Actions) => {
     switch (action.type) {
         case Constants.GAMES_DB_LOADED:
-            return { ...state, games: Object.fromEntries(action.payload.db.games.map(x => [x.name, x])) };
+            return {
+                ...state, games: new Map<string, IGameInfo>(Object.entries(Object.fromEntries(action.payload.db.games.map(x => [x.id, {
+                    ...x,
+                    url: x.url !== undefined ? x.url : `http://localhost:3000/${x.id}/header.yml`
+                }]))))
+            };
         default:
             return state;
     }

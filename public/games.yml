@@ -1,0 +1,4 @@
+games:
+- id: sample
+  name: Sample
+  url: https://raw.githubusercontent.com/moroboxai/piximoroxel8ai/main/sample/header.yml

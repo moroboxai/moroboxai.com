@@ -6,7 +6,10 @@ import { Provider } from 'react-redux'
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import { Helmet } from "react-helmet";
 
+
+const { REACT_APP_PIXIMOROXEL8AI_URL } = process.env;
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -16,6 +19,9 @@ root.render(
   <React.StrictMode>
     <Provider store={store}>
       <Router>
+        <Helmet>
+          <script type="text/javascript" src={REACT_APP_PIXIMOROXEL8AI_URL}></script>
+        </Helmet>
         <App />
       </Router>
     </Provider>

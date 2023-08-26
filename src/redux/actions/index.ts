@@ -2,15 +2,20 @@ import { action } from 'typesafe-actions';
 import { Dispatch } from "redux";
 
 export enum Constants {
-    GAMES_DB_LOADED = 'games/gamesDbLoaded'
+    GAMES_DB_LOADED = 'games/gamesDbLoaded',
+    SELECT_GAME = "player/selectGame"
 }
 
 export interface IGameInfo {
-    name: string
+    id: string;
+    name: string;
+    url: string;
 }
 
 export interface IGamesDb {
-    games: Array<IGameInfo>
+    games: Array<IGameInfo>;
 }
 
 export const gamesDbLoaded = (db: IGamesDb) => action(Constants.GAMES_DB_LOADED, { db });
+
+export const selectGame = (id: string) => action(Constants.SELECT_GAME, { id });
