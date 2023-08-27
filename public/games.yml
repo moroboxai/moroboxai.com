@@ -2,3 +2,7 @@ games:
 - id: sample
   name: Sample
   url: https://raw.githubusercontent.com/moroboxai/piximoroxel8ai/main/sample/header.yml
+  agents:
+  - id: random
+    name: Random
+    url: https://raw.githubusercontent.com/moroboxai/piximoroxel8ai/main/sample/random.js
