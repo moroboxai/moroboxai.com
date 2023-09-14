@@ -1,8 +1,8 @@
 games:
 - id: sample
   name: Sample
-  url: https://raw.githubusercontent.com/moroboxai/piximoroxel8ai/main/sample/header.yml
+  url: https://raw.githubusercontent.com/moroboxai/moroboxai-games/master/piximoroxel8ai-sample/sample/header.yml
   agents:
   - id: random
     name: Random
-    url: https://raw.githubusercontent.com/moroboxai/piximoroxel8ai/main/sample/random.js
+    url: https://raw.githubusercontent.com/moroboxai/moroboxai-games/master/piximoroxel8ai-sample/sample/agent.yml

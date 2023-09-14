@@ -9,7 +9,7 @@ import reportWebVitals from './reportWebVitals';
 import { Helmet } from "react-helmet";
 
 
-const { REACT_APP_PIXIMOROXEL8AI_URL } = process.env;
+const REACT_APP_PIXIMOROXEL8AI_URL = import.meta.env.VITE_PIXIMOROXEL8AI_URL;
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement

@@ -9,7 +9,7 @@ import { Actions } from '../redux/actions/types';
 import jsyaml from "js-yaml";
 import "./PlayerSection.css"
 
-const { REACT_APP_URL_GAMES_YML } = process.env;
+const REACT_APP_URL_GAMES_YML = import.meta.env.VITE_URL_GAMES_YML;
 
 const mapStateToProps = (state: any) => ({
     games: getGames(state),
@@ -41,6 +41,7 @@ class PlayerSection extends React.Component<PlayerSectionProps> {
     }
 
     componentDidMount(): void {
+        console.log(import.meta.env);
         if (REACT_APP_URL_GAMES_YML === undefined) {
             console.error("REACT_APP_URL_GAMES_YML undefined");
             return
