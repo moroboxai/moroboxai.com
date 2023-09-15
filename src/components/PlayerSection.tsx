@@ -61,26 +61,25 @@ class PlayerSection extends React.Component<PlayerSectionProps> {
     }
 
     handleSelectGame(evt: React.ChangeEvent<HTMLSelectElement>) {
+        console.log("select game", evt.target.value);
         this.props.selectGame(evt.target.value);
     }
 
     render() {
-        console.log("list of games", this.props.games);
         console.log("selected game", this.props.selectedGame);
         const selectedGameId = this.props.selectedGame ? this.props.selectedGame.id : undefined;
 
         const games_selector = (
             <select value={selectedGameId} onChange={this.handleSelectGame}>
-                {Array.from(this.props.games).map((value: [string, IGameInfo]) => <option key={value[0]}>{value[1].name}</option>)}
+                {Array.from(this.props.games).map((value: [string, IGameInfo]) => <option key={value[0]} value={value[0]}>{value[1].name}</option>)}
             </select>
         )
 
         const selectedGameUrl = this.props.selectedGame ? this.props.selectedGame.url : "";
-        console.log("selected game url", selectedGameUrl)
 
         return (
             <div className="mai-player-section h100">
-                <Player url={selectedGameUrl} width={256} height={256} />
+                <Player url={selectedGameUrl} width={256} height={256} autoPlay={true} />
                 {games_selector}
             </div>
         )

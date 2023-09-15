@@ -1,3 +1,4 @@
+import { Constants, IGameInfo } from '../actions';
 import { Actions } from '../actions/types';
 
 const REACT_APP_SELECTED_GAME = import.meta.env.VITE_SELECTED_GAME;
@@ -8,6 +9,10 @@ const initialState: {
 
 export default (state = initialState, action: Actions) => {
     switch (action.type) {
+        case Constants.SELECT_GAME:
+            return {
+                ...state, selectedGame: action.payload.id
+            };
         default:
             return state;
     }
