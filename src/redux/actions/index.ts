@@ -1,5 +1,4 @@
 import { action } from 'typesafe-actions';
-import { Dispatch } from "redux";
 
 export enum Constants {
     GAMES_DB_LOADED = 'games/gamesDbLoaded',

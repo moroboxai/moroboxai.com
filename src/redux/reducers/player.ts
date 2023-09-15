@@ -1,4 +1,3 @@
-import { Constants } from '../actions';
 import { Actions } from '../actions/types';
 
 const REACT_APP_SELECTED_GAME = import.meta.env.VITE_SELECTED_GAME;
