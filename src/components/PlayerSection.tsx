@@ -79,7 +79,7 @@ class PlayerSection extends React.Component<PlayerSectionProps> {
 
         return (
             <div className="mai-player-section h100">
-                <Player url={selectedGameUrl} width={256} height={256} autoPlay={true} />
+                <Player url={selectedGameUrl} width={256} height={256} autoPlay={selectedGameUrl !== undefined} />
                 {games_selector}
             </div>
         )
