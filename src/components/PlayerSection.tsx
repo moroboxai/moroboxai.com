@@ -1,4 +1,6 @@
 import React from "react";
+import type { IPlayer } from "moroboxai-player-web";
+import type { Language } from "moroboxai-editor-react";
 import Player from "moroboxai-player-react";
 import Editor from "moroboxai-editor-react";
 import { Dispatch } from "redux";
@@ -37,12 +39,21 @@ type PlayerSectionProps = ReduxProps & {
     className?: string;
 };
 
-class PlayerSection extends React.Component<PlayerSectionProps> {
+type PlayerSectionState = {
+    player?: IPlayer;
+};
+
+class PlayerSection extends React.Component<
+    PlayerSectionProps,
+    PlayerSectionState
+> {
     static propTypes: any;
 
     constructor(props: any) {
         super(props);
 
+        this.state = {};
+        this.handleMount = this.handleMount.bind(this);
         this.handleSelectGame = this.handleSelectGame.bind(this);
         this.handleLoad = this.handleLoad.bind(this);
         this.handleUnload = this.handleUnload.bind(this);
@@ -69,16 +80,27 @@ class PlayerSection extends React.Component<PlayerSectionProps> {
             .catch((error) => console.log(error));
     }
 
+    handleMount(player: IPlayer) {
+        console.log("player mounted");
+        this.setState({ player });
+    }
+
     handleSelectGame(evt: React.ChangeEvent<HTMLSelectElement>) {
         console.log("select game", evt.target.value);
         this.props.selectGame(evt.target.value);
     }
 
-    handleLoad(value: string): void {
-        console.log(value);
+    handleLoad(language: Language, value: string): void {
+        console.log("load", language, value);
+        this.state.player?.getController(0)?.loadAgent({
+            language,
+            code: value
+        });
     }
 
-    handleUnload(): void {}
+    handleUnload(): void {
+        this.state.player?.getController(0)?.unloadAgent();
+    }
 
     render() {
         console.log("selected game", this.props.selectedGame);
@@ -113,6 +135,7 @@ class PlayerSection extends React.Component<PlayerSectionProps> {
                                     width={256}
                                     height={256}
                                     autoPlay={selectedGameId !== undefined}
+                                    onMount={this.handleMount}
                                 />
                             </div>
                         </div>
