@@ -108,7 +108,6 @@ class PlayerSection extends React.Component<
     }
 
     render() {
-        console.log("selected game", this.props.selectedGame);
         const selectedGameId = this.props.selectedGame
             ? this.props.selectedGame.id
             : undefined;
