@@ -9,8 +9,6 @@ import reportWebVitals from './reportWebVitals';
 import { Helmet } from "react-helmet";
 
 
-const REACT_APP_PIXIMOROXEL8AI_URL = import.meta.env.VITE_PIXIMOROXEL8AI_URL;
-
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
@@ -20,7 +18,6 @@ root.render(
     <Provider store={store}>
       <Router>
         <Helmet>
-          <script type="text/javascript" src={REACT_APP_PIXIMOROXEL8AI_URL}></script>
         </Helmet>
         <App />
       </Router>

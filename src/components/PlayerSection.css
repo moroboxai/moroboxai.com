@@ -1,26 +1,21 @@
 .mai-player-section {}
 
 .mai-home-player {
-    background-color: var(--player-outline-color);
-    border-radius: 14px;
-    padding: 6px;
-    box-shadow: 5px 5px 10px rgb(0 0 0 / 50%);
+    box-shadow: 5px 5px 0px var(--player-shadow-color);
 }
 
 .mai-home-player>div {
     background-color: var(--player-background-color);
-    border-radius: 10px;
     padding: 10px;
 }
 
 .mai-home-player .mai-player {
     display: block;
-    border-top: 8px solid var(--player-light-color);
-    border-bottom: 8px solid var(--player-light-color);
-    border-left: 8px solid var(--player-dark-color);
-    border-right: 8px solid var(--player-dark-color);
     background-color: black;
     border-radius: 8px;
+}
+
+.mai-player canvas {
 }
 
 .mai-editor {
@@ -28,8 +23,11 @@
     height: 30em;
     margin-left: 2em;
     background-color: var(--editor-background-color);
-    border-radius: 1em;
-    box-shadow: 4px 4px 8px rgb(0 0 0 / 50%);
-    padding: 1em 0.5em 1em;
+    box-shadow: 5px 5px 0px var(--editor-shadow-color);
+    padding: 10px;
     overflow: hidden;
+}
+
+.moroboxai-language {
+    color: #00BDD4!important;
 }

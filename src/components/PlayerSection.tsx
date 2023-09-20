@@ -3,6 +3,7 @@ import type { IPlayer } from "moroboxai-player-web";
 import type { Language } from "moroboxai-editor-react";
 import Player from "moroboxai-player-react";
 import Editor from "moroboxai-editor-react";
+import * as Moroxel8AI from "moroxel8ai";
 import { Dispatch } from "redux";
 import { connect, ConnectedProps } from "react-redux";
 import { IGameInfo, IGamesDb } from "../redux/actions";
@@ -16,6 +17,8 @@ import jsyaml from "js-yaml";
 import "./PlayerSection.css";
 
 const REACT_APP_URL_GAMES_YML = import.meta.env.VITE_URL_GAMES_YML;
+const HOME_GAME_URL = import.meta.env.VITE_HOME_GAME_URL;
+const HOME_AGENT_URL = import.meta.env.VITE_HOME_AGENT_URL;
 
 const mapStateToProps = (state: any) => ({
     games: getGames(state),
@@ -60,6 +63,8 @@ class PlayerSection extends React.Component<
     }
 
     componentDidMount(): void {
+        window.Moroxel8AI = Moroxel8AI;
+        
         console.log(import.meta.env);
         if (REACT_APP_URL_GAMES_YML === undefined) {
             console.error("REACT_APP_URL_GAMES_YML undefined");
@@ -120,32 +125,24 @@ class PlayerSection extends React.Component<
             </select>
         );
 
-        const selectedGameUrl = this.props.selectedGame
-            ? this.props.selectedGame.url
-            : "";
-
         return (
             <div className="mai-player-section h100 vertical">
                 <div className="horizontal">
-                    <div>
-                        <div className="mai-home-player">
-                            <div>
-                                <Player
-                                    url={selectedGameUrl}
-                                    width={256}
-                                    height={256}
-                                    autoPlay={selectedGameId !== undefined}
-                                    onMount={this.handleMount}
-                                />
-                            </div>
+                    <div className="mai-home-player">
+                        <div>
+                            <Player
+                                url={HOME_GAME_URL}
+                                width={384}
+                                height={288}
+                                scale={1.5}
+                                autoPlay={true}
+                                onMount={this.handleMount}
+                            />
                         </div>
-                        {games_selector}
                     </div>
                     <div>
                         <Editor
-                            value={
-                                "function inputs(state) {\n    return {};\n}"
-                            }
+                            url={HOME_AGENT_URL}
                             onLoad={this.handleLoad}
                             onUnload={this.handleUnload}
                         />

@@ -6,16 +6,18 @@
   
   --menu-background-color: #518071;
   --menu-dark-color: #355c60;
-  --body-background-color: #141414;
+  --body-background-color: #94B0B2; 
+  --body-background-color: #AAAD9B; 
   --footer-light-color: #523d3d;
   --footer-background-color: #463443;
   
-  --editor-background-color: #1e1e1e;
+  --editor-background-color: rgba(255, 255, 255, 0.7);
+  --editor-shadow-color: rgb(0 0 0 / 50%);
   
-  --player-outline-color: #6B405A;
-  --player-background-color: #DDD3D9;
-  --player-light-color: #D4A3A5;
-  --player-dark-color: #847191;
+  --player-background-color: rgba(255, 255, 255, 0.7);
+  --player-shadow-color: rgb(0 0 0 / 50%);
+  --player-light-color: #8FDA83;
+  --player-dark-color: #3F4756;
   
   --note-background-color: var(--yellow-bright-color);
   --note-text-color: #8C5261;
@@ -37,7 +39,7 @@
 }
 
 .App-header {
-  background-color: #282c34;
+  background-color: var(--body-background-color);
   min-height: 100vh;
   display: flex;
   flex-direction: column;
