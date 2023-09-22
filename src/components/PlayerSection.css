@@ -19,8 +19,6 @@
 }
 
 .mai-editor {
-    width: 35em;
-    height: 30em;
     margin-left: 2em;
     background-color: var(--editor-background-color);
     box-shadow: 5px 5px 0px var(--editor-shadow-color);

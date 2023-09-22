@@ -142,6 +142,8 @@ class PlayerSection extends React.Component<
                     <div>
                         <Editor
                             url={HOME_AGENT_URL}
+                            width="500px"
+                            height="500px"
                             onLoad={this.handleLoad}
                             onUnload={this.handleUnload}
                         />
