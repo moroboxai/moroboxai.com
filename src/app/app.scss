@@ -1,4 +1,9 @@
-@import "./components/Common";
+@import "../components/Common";
+
+body {
+    margin: 0;
+    padding: 0;
+}
 
 .App {
     background-color: var(--body-background-color);
