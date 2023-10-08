@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import Link from "next/link";
 import { Dispatch } from "redux";
 import { connect, ConnectedProps } from "react-redux";
 import { dispatchToggleMenu } from "../redux/dispatchers";
@@ -29,7 +29,7 @@ type MenuProps = ReduxProps & {
     className?: string;
 };
 
-type MenuState = IMenuState & {};
+type MenuState = {};
 
 class Menu extends React.Component<MenuProps, MenuState> {
     static propTypes: any;
@@ -63,10 +63,10 @@ class Menu extends React.Component<MenuProps, MenuState> {
                 >
                     <ul>
                         <li>
-                            <a href="/games">Games</a>
+                            <Link href="/games">Games</Link>
                         </li>
                         <li>
-                            <a href="/learn">Learn</a>
+                            <Link href="/learn">Learn</Link>
                         </li>
                     </ul>
                 </div>

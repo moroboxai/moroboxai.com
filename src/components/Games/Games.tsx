@@ -1,5 +1,4 @@
 import React from "react";
-import styles from "./Games.module.scss";
 
 type GamesProps = {
     className?: string;

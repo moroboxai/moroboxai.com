@@ -1,12 +1,12 @@
 import React from "react";
 import type { IPlayer } from "moroboxai-player-sdk";
-import type { Language } from "moroboxai-editor-react";
+import type { Language } from "moroboxai-editor-sdk";
 import Player from "moroboxai-player-react";
 import Editor from "moroboxai-editor-react";
 import * as Moroxel8AI from "moroxel8ai";
 import { Dispatch } from "redux";
 import { connect, ConnectedProps } from "react-redux";
-import { GameInfo, GamesDb } from "../redux/actions";
+import { GamesDb } from "../redux/actions";
 import {
     dispatchGamesDbLoaded,
     dispatchSelectGame
@@ -111,22 +111,6 @@ class PlayerSection extends React.Component<
     }
 
     render() {
-        const selectedGameId = this.props.selectedGame
-            ? this.props.selectedGame.id
-            : undefined;
-
-        const games_selector = (
-            <select value={selectedGameId} onChange={this.handleSelectGame}>
-                {Array.from(this.props.games).map(
-                    (value: [string, GameInfo]) => (
-                        <option key={value[0]} value={value[0]}>
-                            {value[1].name}
-                        </option>
-                    )
-                )}
-            </select>
-        );
-
         return (
             <div className={styles.section + " vertical"}>
                 <div className="horizontal">

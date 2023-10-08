@@ -21,7 +21,7 @@ function idToTitle(id: string): string {
 
 function collectArticles(dir: string): Promise<Article[]> {
     return new Promise<Article[]>((resolve) => {
-        fs.readdir(dir, async (err, files) => {
+        fs.readdir(dir, async (_, files) => {
             const articles: Article[] = [];
 
             await Promise.all(
@@ -58,7 +58,7 @@ function collectArticles(dir: string): Promise<Article[]> {
 function collectStructure(dir: string): Promise<Structure> {
     // Read directories under learn repository
     return new Promise<Structure>((resolve) => {
-        fs.readdir(dir, async (err, files) => {
+        fs.readdir(dir, async (_, files) => {
             const rootContent = fs.readFileSync(path.join(dir, "README.md"));
             const result: Structure = {
                 categories: [],
