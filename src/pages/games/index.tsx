@@ -2,7 +2,7 @@
 
 import React from "react";
 import dynamic from "next/dynamic";
-import { collectGames } from "./[id]/utils";
+import { collectGames } from "@/lib/utils";
 import type { InferGetStaticPropsType } from "next";
 
 /**

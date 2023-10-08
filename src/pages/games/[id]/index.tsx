@@ -6,7 +6,7 @@ import React from "react";
 import { remark } from "remark";
 import dynamic from "next/dynamic";
 import type { InferGetStaticPropsType } from "next";
-import { collectGame } from "./utils";
+import { collectGame } from "@/lib/utils";
 import { getStaticProps as getStaticGames } from "@/pages/games";
 
 /**
