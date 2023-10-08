@@ -89,19 +89,13 @@ function collectStructure(dir: string): Promise<Structure> {
     });
 }
 
-const Learn = dynamic(() => import("../../../components/Learn"), {
-    ssr: false
-});
-
 /**
  * Get static data for learn articles.
  */
 export async function getStaticProps() {
-    const structure = await collectStructure("src/learn");
-
     return {
         props: {
-            structure: structure
+            structure: await collectStructure("src/learn")
         }
     };
 }
@@ -134,6 +128,10 @@ export async function getStaticPaths() {
 
     return result;
 }
+
+const Learn = dynamic(() => import("../../../components/Learn"), {
+    ssr: false
+});
 
 export default function LearnPage({
     structure

@@ -1,0 +1,24 @@
+@import "@/components/Variables";
+
+.game {
+    background-color: $home-player-section-background-color;
+    box-shadow: 5px 5px 0px $player-shadow-color;
+    display: inline-block;
+    text-decoration: none;
+}
+
+.game>div {
+    background-color: $player-background-color;
+    padding: 10px;
+}
+
+.game img {
+    object-fit: cover;
+    width: 100%;
+    aspect-ratio: 16/9;
+}
+
+.title {
+    color: $games-title-text-color;
+    font-weight: bold;
+}

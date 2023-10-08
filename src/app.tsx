@@ -23,10 +23,8 @@ class App extends React.Component<AppProps> {
             <React.StrictMode>
                 <Router>
                     <div className="App">
-                        <header className="App-header">
-                            <Menu />
-                            {this.props.children}
-                        </header>
+                        <Menu />
+                        {this.props.children}
                         <ScrollToTop smooth />
                     </div>
                 </Router>

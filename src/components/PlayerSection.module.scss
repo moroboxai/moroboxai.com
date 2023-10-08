@@ -1,8 +1,6 @@
 @import "./Common";
 
 .section {
-    // Take as much space as possible
-    flex-grow: 1;
     background-color: $home-player-section-background-color;
 }
 

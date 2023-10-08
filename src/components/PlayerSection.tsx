@@ -4,32 +4,18 @@ import type { Language } from "moroboxai-editor-sdk";
 import Player from "moroboxai-player-react";
 import Editor from "moroboxai-editor-react";
 import * as Moroxel8AI from "moroxel8ai";
+import * as PixiMoroxel8AI from "piximoroxel8ai";
 import { Dispatch } from "redux";
 import { connect, ConnectedProps } from "react-redux";
-import { GamesDb } from "../redux/actions";
-import {
-    dispatchGamesDbLoaded,
-    dispatchSelectGame
-} from "../redux/dispatchers";
-import { getGames, getSelectedGame } from "../redux/selectors";
 import { Actions } from "../redux/actions/types";
-import jsyaml from "js-yaml";
 import styles from "./PlayerSection.module.scss";
 
-const REACT_APP_URL_GAMES_YML = process.env.NEXT_PUBLIC_URL_GAMES_YML;
-const HOME_GAME_URL = process.env.NEXT_PUBLIC_HOME_GAME_URL;
-const HOME_AGENT_URL = process.env.NEXT_PUBLIC_HOME_AGENT_URL;
+const RANDOM_AGENT_URL = process.env.NEXT_PUBLIC_RANDOM_AGENT_URL;
 
-const mapStateToProps = (state: any) => ({
-    games: getGames(state),
-    selectedGame: getSelectedGame(state)
-});
+const mapStateToProps = (_: any) => ({});
 
-const mapDispatchToProps = (dispatch: Dispatch<Actions>) => {
-    return {
-        gamesDbLoaded: dispatchGamesDbLoaded(dispatch),
-        selectGame: dispatchSelectGame(dispatch)
-    };
+const mapDispatchToProps = (_: Dispatch<Actions>) => {
+    return {};
 };
 
 const connector = connect(mapStateToProps, mapDispatchToProps, null, {
@@ -40,6 +26,8 @@ type ReduxProps = ConnectedProps<typeof connector>;
 
 type PlayerSectionProps = ReduxProps & {
     className?: string;
+    gameUrl: string;
+    agentUrl: string;
 };
 
 type PlayerSectionState = {
@@ -58,29 +46,14 @@ class PlayerSection extends React.Component<
         this.state = {};
         this.handleMount = this.handleMount.bind(this);
         this.handleUnmount = this.handleUnmount.bind(this);
-        this.handleSelectGame = this.handleSelectGame.bind(this);
         this.handleLoad = this.handleLoad.bind(this);
         this.handleUnload = this.handleUnload.bind(this);
     }
 
     componentDidMount(): void {
-        if (REACT_APP_URL_GAMES_YML === undefined) {
-            console.error("REACT_APP_URL_GAMES_YML undefined");
-            return;
-        }
-
-        fetch(REACT_APP_URL_GAMES_YML)
-            .then((response) => response.text())
-            .then((data) => jsyaml.load(data))
-            .then((data) => {
-                if (data === null || typeof data !== "object") {
-                    throw "Invalid data";
-                }
-
-                console.log("Games db loaded", data);
-                this.props.gamesDbLoaded(data as GamesDb);
-            })
-            .catch((error) => console.log(error));
+        // Hook PixiMoroxel8AI and Moroxel8AI
+        (window as any).PixiMoroxel8AI = PixiMoroxel8AI;
+        (window as any).Moroxel8AI = Moroxel8AI;
     }
 
     handleMount(player: IPlayer) {
@@ -91,11 +64,6 @@ class PlayerSection extends React.Component<
     handleUnmount(_: IPlayer) {
         console.log("player unmounted");
         this.setState({ player: undefined });
-    }
-
-    handleSelectGame(evt: React.ChangeEvent<HTMLSelectElement>) {
-        console.log("select game", evt.target.value);
-        this.props.selectGame(evt.target.value);
     }
 
     handleLoad(language: Language, value: string): void {
@@ -111,14 +79,15 @@ class PlayerSection extends React.Component<
     }
 
     render() {
+        const { className, gameUrl, agentUrl } = this.props;
+
         return (
-            <div className={styles.section + " vertical"}>
+            <div className={[styles.section, className, "vertical"].join(" ")}>
                 <div className="horizontal">
                     <div className={styles.player}>
                         <div>
                             <Player
-                                url={HOME_GAME_URL ?? ""}
-                                boot={Moroxel8AI}
+                                url={gameUrl}
                                 width={513}
                                 height={384}
                                 scale={1.5}
@@ -131,7 +100,7 @@ class PlayerSection extends React.Component<
                     <div>
                         <Editor
                             className={styles.editor}
-                            url={HOME_AGENT_URL}
+                            url={agentUrl}
                             width="500px"
                             height="500px"
                             onLoad={this.handleLoad}

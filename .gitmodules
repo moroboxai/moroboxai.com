@@ -1,3 +1,6 @@
 [submodule "src/learn"]
 	path = src/learn
 	url = https://github.com/moroboxai/moroboxai-learn.git
+[submodule "src/games"]
+	path = src/games
+	url = https://github.com/moroboxai/moroboxai-games.git

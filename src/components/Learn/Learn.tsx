@@ -30,20 +30,22 @@ class Learn extends React.Component<LearnProps> {
         }
 
         return (
-            <div className={styles.section + " container"}>
-                <div className="row">
-                    <div className="col-3">
-                        <TOC
-                            baseUrl={this.props.baseUrl}
-                            structure={this.props.structure}
-                        />
-                    </div>
-                    <div className="col">
-                        <Article
-                            structure={this.props.structure}
-                            category={this.props.category}
-                            article={this.props.article}
-                        />
+            <div className={[styles.section, "top-section"].join(" ")}>
+                <div className="container">
+                    <div className="row">
+                        <div className="col-3">
+                            <TOC
+                                baseUrl={this.props.baseUrl}
+                                structure={this.props.structure}
+                            />
+                        </div>
+                        <div className="col">
+                            <Article
+                                structure={this.props.structure}
+                                category={this.props.category}
+                                article={this.props.article}
+                            />
+                        </div>
                     </div>
                 </div>
             </div>
