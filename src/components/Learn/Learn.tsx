@@ -1,8 +1,11 @@
 import React from "react";
-import "./learn.scss";
+import TOC from "./TOC";
+import Article from "./Article";
+import styles from "./Learn.module.scss";
 
 type LearnProps = {
     className?: string;
+    articles: string[];
 };
 
 class Learn extends React.Component<LearnProps> {
@@ -13,7 +16,12 @@ class Learn extends React.Component<LearnProps> {
     }
 
     render() {
-        return <></>;
+        return (
+            <>
+                <TOC articles={this.props.articles} />
+                <Article />
+            </>
+        );
     }
 }
 

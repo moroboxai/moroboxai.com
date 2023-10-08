@@ -1,11 +1,11 @@
 import React from "react";
-import "./games.scss";
+import styles from "./Article.module.scss";
 
-type GamesProps = {
+type ArticleProps = {
     className?: string;
 };
 
-class Games extends React.Component<GamesProps> {
+class Article extends React.Component<ArticleProps> {
     static propTypes: any;
 
     constructor(props: any) {
@@ -17,6 +17,6 @@ class Games extends React.Component<GamesProps> {
     }
 }
 
-Games.propTypes = {};
+Article.propTypes = {};
 
-export default Games;
+export default Article;

@@ -1,10 +1,10 @@
-@import "bootstrap/scss/bootstrap-grid";
-@import "bootstrap-grid-only-css/scss/bootstrap-grid";
-@import "@fortawesome/fontawesome-free/css/fontawesome.min";
+@import "bootstrap/scss/functions";
+@import "bootstrap/scss/variables";
+@import "bootstrap/scss/mixins";
 @import "./Variables";
 
 .h100 {
-    min-height: 100vh;
+    min-height: 100%;
 }
 
 .vertical {

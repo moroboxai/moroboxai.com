@@ -1,24 +1,21 @@
 @import "./Common";
 
-$menu-text-color: var(--text-white-color);
-$menu-hover-color: var(--yellow-bright-color);
+$menu-text-color: $text-white-color;
+$menu-hover-color: $yellow-bright-color;
 
-nav {
+.menu {
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: center;
-}
-
-.mai-menu {
-    background-color: var(--menu-background-color);
+    background-color: $menu-background-color;
 
     @include media-breakpoint-down(md) {
         min-height: 5.25em;
     }
 }
 
-.mai-menu .mai-items {
+.menu .items {
     @include media-breakpoint-down(md) {
         width: 100%;
         transition: max-height 0.25s;
@@ -33,12 +30,12 @@ nav {
 }
 
 @include media-breakpoint-down(md) {
-    .mai-menu .mai-items[class*="mai-active"] {
+    .menu .items[class*="mai-active"] {
         max-height: 8em;
     }
 }
 
-.mai-menu ul {
+.menu ul {
     list-style: none;
     display: flex;
     margin: 0;
@@ -62,7 +59,7 @@ nav {
     }
 }
 
-.mai-menu li {
+.menu li {
     font-weight: 500;
 
     @include media-breakpoint-down(md) {
@@ -70,20 +67,20 @@ nav {
     }
 }
 
-.mai-menu a {
+.menu a {
     color: $menu-text-color;
     text-decoration: none;
 }
 
-.mai-menu a:hover {
+.menu a:hover {
     color: $menu-hover-color;
 }
 
-.mai-menu div {
+.menu div {
     display: inline-block;
 }
 
-.mai-menu .mai-home {
+.menu .home {
     @include media-breakpoint-down(md) {
         position: absolute;
         top: 1em;
@@ -93,7 +90,7 @@ nav {
     }
 }
 
-.mai-menu .mai-toggle {
+.menu .toggle {
     background: none;
     border: none;
     padding: 0;
@@ -116,6 +113,6 @@ nav {
     }
 }
 
-.mai-menu .mai-toggle:hover {
+.menu .toggle:hover {
     color: $menu-hover-color;
 }

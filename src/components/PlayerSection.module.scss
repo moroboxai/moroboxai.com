@@ -1,0 +1,29 @@
+@import "./Common";
+
+.section {
+    // Take as much space as possible
+    flex-grow: 1;
+}
+
+.player {
+    box-shadow: 5px 5px 0px $player-shadow-color;
+}
+
+.player>div {
+    background-color: $player-background-color;
+    padding: 10px;
+}
+
+.player .mai-player {
+    display: block;
+    background-color: black;
+    border-radius: 8px;
+}
+
+.editor {
+    margin-left: 2em;
+    background-color: $editor-background-color;
+    box-shadow: 5px 5px 0px $editor-shadow-color;
+    padding: 10px;
+    overflow: hidden;
+}

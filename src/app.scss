@@ -1,4 +1,6 @@
-@import "../components/Common";
+@import "bootstrap-grid-only-css/scss/bootstrap-grid";
+@import "@fortawesome/fontawesome-free/css/fontawesome.min";
+@import "@/components/Common";
 
 body {
     margin: 0;
@@ -11,9 +13,17 @@ body {
 }
 
 .App {
-    background-color: var(--body-background-color);
+    background-color: $body-background-color;
     color: white;
     min-height: 100vh;
+}
+
+.App-header {
+    // In home we want the top to be 100% of screen height
+    min-height: 100vh;
+    // Required to make the player section fill the space
+    display: flex;
+    flex-direction: column;
 }
 
 .App-link {

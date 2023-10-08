@@ -1,6 +1,6 @@
 import React from "react";
 import PlayerSection from "./PlayerSection";
-import "./Home.scss";
+import styles from "./Home.module.scss";
 
 type HomeProps = {
     className?: string;

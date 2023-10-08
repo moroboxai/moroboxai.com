@@ -14,7 +14,7 @@ import {
 import { getGames, getSelectedGame } from "../redux/selectors";
 import { Actions } from "../redux/actions/types";
 import jsyaml from "js-yaml";
-import "./PlayerSection.scss";
+import styles from "./PlayerSection.module.scss";
 
 const REACT_APP_URL_GAMES_YML = process.env.NEXT_PUBLIC_URL_GAMES_YML;
 const HOME_GAME_URL = process.env.NEXT_PUBLIC_HOME_GAME_URL;
@@ -128,9 +128,9 @@ class PlayerSection extends React.Component<
         );
 
         return (
-            <div className="mai-player-section vertical">
+            <div className={styles.section + " vertical"}>
                 <div className="horizontal">
-                    <div className="mai-home-player">
+                    <div className={styles.player}>
                         <div>
                             <Player
                                 url={HOME_GAME_URL ?? ""}
@@ -146,6 +146,7 @@ class PlayerSection extends React.Component<
                     </div>
                     <div>
                         <Editor
+                            className={styles.editor}
                             url={HOME_AGENT_URL}
                             width="500px"
                             height="500px"

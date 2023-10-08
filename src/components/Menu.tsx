@@ -7,7 +7,7 @@ import { getMenu } from "../redux/selectors";
 import { Actions } from "../redux/actions/types";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHome, faBars, faXmark } from "@fortawesome/free-solid-svg-icons";
-import "./Menu.scss";
+import styles from "./Menu.module.scss";
 
 const mapStateToProps = (state: any) => ({
     menu: getMenu(state)
@@ -48,15 +48,16 @@ class Menu extends React.Component<MenuProps, MenuState> {
         const { className } = this.props;
 
         return (
-            <nav className={"mai-menu " + (className || "")}>
-                <div className="mai-home">
+            <nav className={styles.menu + " " + (className || "")}>
+                <div className={styles.home}>
                     <a href="/">
                         <FontAwesomeIcon className="mai-fab" icon={faHome} />
                     </a>
                 </div>
                 <div
                     className={
-                        "mai-items " +
+                        styles.items +
+                        " " +
                         (this.props.menu.toggled === true ? "mai-active" : "")
                     }
                 >
@@ -69,7 +70,7 @@ class Menu extends React.Component<MenuProps, MenuState> {
                         </li>
                     </ul>
                 </div>
-                <button className="mai-toggle" onClick={this._handleToggle}>
+                <button className={styles.toggle} onClick={this._handleToggle}>
                     <FontAwesomeIcon
                         className="mai-fab"
                         icon={
