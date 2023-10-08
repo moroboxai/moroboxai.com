@@ -1,3 +1,23 @@
-.mai-toc {
-    width: 20em;
+@import "@/components/Variables";
+
+.toc ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.category {
+    font-weight: bold;
+    color: $learn-toc-category-text-color;
+    display: inline-block;
+}
+
+.category {
+    margin-top: $learn-toc-category-margin-top;
+}
+
+.article {
+    margin-left: $learn-toc-article-margin-left;
+    text-decoration: none;
+    color: $learn-toc-article-text-color;
 }

@@ -3,6 +3,8 @@ import styles from "./Article.module.scss";
 
 type ArticleProps = {
     className?: string;
+    category?: string;
+    article?: string;
 };
 
 class Article extends React.Component<ArticleProps> {
@@ -13,7 +15,13 @@ class Article extends React.Component<ArticleProps> {
     }
 
     render() {
-        return <></>;
+        return (
+            <>
+                Article
+                {this.props.category}
+                {this.props.article}
+            </>
+        );
     }
 }
 
