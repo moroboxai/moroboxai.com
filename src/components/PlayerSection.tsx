@@ -10,8 +10,6 @@ import { connect, ConnectedProps } from "react-redux";
 import { Actions } from "../redux/actions/types";
 import styles from "./PlayerSection.module.scss";
 
-const RANDOM_AGENT_URL = process.env.NEXT_PUBLIC_RANDOM_AGENT_URL;
-
 const mapStateToProps = (_: any) => ({});
 
 const mapDispatchToProps = (_: Dispatch<Actions>) => {
