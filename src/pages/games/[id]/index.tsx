@@ -26,7 +26,7 @@ export async function getStaticProps(context: any) {
 }
 
 /**
- * Get static paths to learn articles.
+ * Get static paths for all possible games.
  */
 export async function getStaticPaths() {
     const { props } = await getStaticGames();
