@@ -135,8 +135,8 @@ class PlayerSection extends React.Component<
                             <Player
                                 url={HOME_GAME_URL ?? ""}
                                 boot={Moroxel8AI}
-                                width={384}
-                                height={288}
+                                width={513}
+                                height={384}
                                 scale={1.5}
                                 autoPlay={true}
                                 onMount={this.handleMount}
