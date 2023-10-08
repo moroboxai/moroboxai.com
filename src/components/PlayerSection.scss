@@ -1,4 +1,9 @@
-.mai-player-section {}
+@import "./Common";
+
+.mai-player-section {
+    // Take as much space as possible
+    flex-grow: 1;
+}
 
 .mai-home-player {
     box-shadow: 5px 5px 0px var(--player-shadow-color);
@@ -15,8 +20,7 @@
     border-radius: 8px;
 }
 
-.mai-player canvas {
-}
+.mai-player canvas {}
 
 .mai-editor {
     margin-left: 2em;
@@ -27,5 +31,5 @@
 }
 
 .moroboxai-language {
-    color: #00BDD4!important;
+    color: #00BDD4 !important;
 }

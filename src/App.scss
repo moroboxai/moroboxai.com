@@ -1,0 +1,11 @@
+@import "./components/Common";
+
+.App {
+    background-color: var(--body-background-color);
+    color: white;
+    min-height: 100vh;
+}
+
+.App-link {
+    color: #61dafb;
+}

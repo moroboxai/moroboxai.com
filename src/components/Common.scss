@@ -1,0 +1,22 @@
+@import "bootstrap/scss/bootstrap-grid";
+@import "bootstrap-grid-only-css/scss/bootstrap-grid";
+@import "@fortawesome/fontawesome-free/css/fontawesome.min";
+@import "./Variables";
+
+.h100 {
+    min-height: 100vh;
+}
+
+.vertical {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.horizontal {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}

@@ -1,5 +1,6 @@
 dist
 package-lock.json
+.next/
 
 .DS_STORE
 node_modules

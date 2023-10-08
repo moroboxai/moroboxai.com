@@ -1,12 +1,12 @@
 import React from "react";
-import type { IPlayer } from "moroboxai-player-web";
+import type { IPlayer } from "moroboxai-player-sdk";
 import type { Language } from "moroboxai-editor-react";
 import Player from "moroboxai-player-react";
 import Editor from "moroboxai-editor-react";
 import * as Moroxel8AI from "moroxel8ai";
 import { Dispatch } from "redux";
 import { connect, ConnectedProps } from "react-redux";
-import { IGameInfo, IGamesDb } from "../redux/actions";
+import { GameInfo, GamesDb } from "../redux/actions";
 import {
     dispatchGamesDbLoaded,
     dispatchSelectGame
@@ -14,11 +14,11 @@ import {
 import { getGames, getSelectedGame } from "../redux/selectors";
 import { Actions } from "../redux/actions/types";
 import jsyaml from "js-yaml";
-import "./PlayerSection.css";
+import "./PlayerSection.scss";
 
-const REACT_APP_URL_GAMES_YML = import.meta.env.VITE_URL_GAMES_YML;
-const HOME_GAME_URL = import.meta.env.VITE_HOME_GAME_URL;
-const HOME_AGENT_URL = import.meta.env.VITE_HOME_AGENT_URL;
+const REACT_APP_URL_GAMES_YML = process.env.NEXT_PUBLIC_URL_GAMES_YML;
+const HOME_GAME_URL = process.env.NEXT_PUBLIC_HOME_GAME_URL;
+const HOME_AGENT_URL = process.env.NEXT_PUBLIC_HOME_AGENT_URL;
 
 const mapStateToProps = (state: any) => ({
     games: getGames(state),
@@ -57,15 +57,13 @@ class PlayerSection extends React.Component<
 
         this.state = {};
         this.handleMount = this.handleMount.bind(this);
+        this.handleUnmount = this.handleUnmount.bind(this);
         this.handleSelectGame = this.handleSelectGame.bind(this);
         this.handleLoad = this.handleLoad.bind(this);
         this.handleUnload = this.handleUnload.bind(this);
     }
 
     componentDidMount(): void {
-        window.Moroxel8AI = Moroxel8AI;
-        
-        console.log(import.meta.env);
         if (REACT_APP_URL_GAMES_YML === undefined) {
             console.error("REACT_APP_URL_GAMES_YML undefined");
             return;
@@ -80,7 +78,7 @@ class PlayerSection extends React.Component<
                 }
 
                 console.log("Games db loaded", data);
-                this.props.gamesDbLoaded(data as IGamesDb);
+                this.props.gamesDbLoaded(data as GamesDb);
             })
             .catch((error) => console.log(error));
     }
@@ -88,6 +86,11 @@ class PlayerSection extends React.Component<
     handleMount(player: IPlayer) {
         console.log("player mounted");
         this.setState({ player });
+    }
+
+    handleUnmount(_: IPlayer) {
+        console.log("player unmounted");
+        this.setState({ player: undefined });
     }
 
     handleSelectGame(evt: React.ChangeEvent<HTMLSelectElement>) {
@@ -115,7 +118,7 @@ class PlayerSection extends React.Component<
         const games_selector = (
             <select value={selectedGameId} onChange={this.handleSelectGame}>
                 {Array.from(this.props.games).map(
-                    (value: [string, IGameInfo]) => (
+                    (value: [string, GameInfo]) => (
                         <option key={value[0]} value={value[0]}>
                             {value[1].name}
                         </option>
@@ -125,17 +128,19 @@ class PlayerSection extends React.Component<
         );
 
         return (
-            <div className="mai-player-section h100 vertical">
+            <div className="mai-player-section vertical">
                 <div className="horizontal">
                     <div className="mai-home-player">
                         <div>
                             <Player
-                                url={HOME_GAME_URL}
+                                url={HOME_GAME_URL ?? ""}
+                                boot={Moroxel8AI}
                                 width={384}
                                 height={288}
                                 scale={1.5}
                                 autoPlay={true}
                                 onMount={this.handleMount}
+                                onUnmount={this.handleUnmount}
                             />
                         </div>
                     </div>

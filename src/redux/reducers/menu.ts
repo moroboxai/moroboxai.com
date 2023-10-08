@@ -1,18 +1,16 @@
 import { Constants } from "../actions";
 import { Actions } from "../actions/types";
 
-const REACT_APP_SELECTED_GAME = process.env.NEXT_PUBLIC_SELECTED_GAME;
-
 const initialState: {
-    selectedGame: string | undefined;
-} = { selectedGame: REACT_APP_SELECTED_GAME };
+    toggled: boolean;
+} = { toggled: false };
 
 export default (state = initialState, action: Actions) => {
     switch (action.type) {
-        case Constants.SELECT_GAME:
+        case Constants.TOGGLE_MENU:
             return {
                 ...state,
-                selectedGame: action.payload.id
+                toggled: action.payload.value
             };
         default:
             return state;
