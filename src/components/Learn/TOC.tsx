@@ -22,6 +22,7 @@ export interface Category {
 
 export interface Structure {
     categories: Category[];
+    rootContent: string;
 }
 type TOCProps = {
     className?: string;

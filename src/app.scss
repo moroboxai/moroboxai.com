@@ -11,10 +11,10 @@ body {
         sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    background-color: $body-background-color;
 }
 
 .App {
-    background-color: $body-background-color;
     color: white;
     min-height: 100vh;
 }

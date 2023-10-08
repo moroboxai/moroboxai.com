@@ -30,9 +30,9 @@ class Learn extends React.Component<LearnProps> {
         }
 
         return (
-            <div className={styles.section + " container-fluid"}>
+            <div className={styles.section + " container"}>
                 <div className="row">
-                    <div className="col-5">
+                    <div className="col-3">
                         <TOC
                             baseUrl={this.props.baseUrl}
                             structure={this.props.structure}
@@ -40,6 +40,7 @@ class Learn extends React.Component<LearnProps> {
                     </div>
                     <div className="col">
                         <Article
+                            structure={this.props.structure}
                             category={this.props.category}
                             article={this.props.article}
                         />

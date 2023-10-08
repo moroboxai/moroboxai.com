@@ -59,8 +59,10 @@ function collectStructure(dir: string): Promise<Structure> {
     // Read directories under learn repository
     return new Promise<Structure>((resolve) => {
         fs.readdir(dir, async (err, files) => {
+            const rootContent = fs.readFileSync(path.join(dir, "README.md"));
             const result: Structure = {
-                categories: []
+                categories: [],
+                rootContent: String(await remark.process(rootContent))
             };
 
             await Promise.all(
