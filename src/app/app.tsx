@@ -4,6 +4,7 @@ import React from "react";
 import store from "../redux/store";
 import { Provider } from "react-redux";
 import { BrowserRouter as Router } from "react-router-dom";
+import ScrollToTop from "react-scroll-to-top";
 import dynamic from "next/dynamic";
 import "./app.scss";
 
@@ -30,6 +31,7 @@ class App extends React.Component<AppProps> {
                                 <Menu />
                                 {this.props.children}
                             </header>
+                            <ScrollToTop smooth />
                         </div>
                     </Router>
                 </Provider>
