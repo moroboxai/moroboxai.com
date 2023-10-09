@@ -5,11 +5,14 @@
     box-shadow: 5px 5px 0px $player-shadow-color;
     display: inline-block;
     text-decoration: none;
+    width: 100%;
 }
 
 .game>div {
     background-color: $player-background-color;
     padding: 10px;
+    width: 100%;
+    aspect-ratio: 16/9;
 }
 
 .game img {
