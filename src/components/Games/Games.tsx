@@ -1,6 +1,6 @@
 import React from "react";
 import GamePreview from "./GamePreview";
-import type { GameMetadata } from "./Game";
+import type { GameMetadata } from "@/components/PlayerSection";
 import styles from "./Games.module.scss";
 
 type GamesProps = {
