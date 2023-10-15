@@ -1,6 +1,6 @@
 import React from "react";
 import Link from "next/link";
-import type { GameMetadata } from "./Game";
+import type { GameMetadata } from "@/components/PlayerSection";
 import styles from "./GamePreview.module.scss";
 
 type GamePreviewProps = {
@@ -21,7 +21,7 @@ class GamePreview extends React.Component<GamePreviewProps> {
         return (
             <Link href={game.href} className={styles.game}>
                 <div>
-                    <img src={game.preview} loading="lazy"></img>
+                    <img src={game.previewUrl} loading="lazy"></img>
                     <div className={styles.title}>{game.title}</div>
                 </div>
             </Link>

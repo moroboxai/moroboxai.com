@@ -1,14 +1,23 @@
 import React from "react";
 import type { IPlayer } from "moroboxai-player-sdk";
 import type { Language } from "moroboxai-editor-sdk";
-import Player from "moroboxai-player-react";
 import Editor from "moroboxai-editor-react";
-import * as Moroxel8AI from "moroxel8ai";
-import * as PixiMoroxel8AI from "piximoroxel8ai";
 import { Dispatch } from "redux";
 import { connect, ConnectedProps } from "react-redux";
-import { Actions } from "../redux/actions/types";
+import { Actions } from "@/redux/actions/types";
 import styles from "./PlayerSection.module.scss";
+
+export interface GameMetadata {
+    id: string;
+    title: string;
+    href: string;
+    url: string;
+    previewUrl: string;
+    width: number;
+    height: number;
+    scale: number;
+    date: Date;
+}
 
 const mapStateToProps = (_: any) => ({});
 
@@ -24,7 +33,7 @@ type ReduxProps = ConnectedProps<typeof connector>;
 
 type PlayerSectionProps = ReduxProps & {
     className?: string;
-    gameUrl: string;
+    game: GameMetadata;
     agentUrl: string;
 };
 
@@ -46,12 +55,6 @@ class PlayerSection extends React.Component<
         this.handleUnmount = this.handleUnmount.bind(this);
         this.handleLoad = this.handleLoad.bind(this);
         this.handleUnload = this.handleUnload.bind(this);
-    }
-
-    componentDidMount(): void {
-        // Hook PixiMoroxel8AI and Moroxel8AI
-        (window as any).PixiMoroxel8AI = PixiMoroxel8AI;
-        (window as any).Moroxel8AI = Moroxel8AI;
     }
 
     handleMount(player: IPlayer) {
@@ -77,33 +80,35 @@ class PlayerSection extends React.Component<
     }
 
     render() {
-        const { className, gameUrl, agentUrl } = this.props;
+        const { className, game, agentUrl } = this.props;
 
         return (
             <div className={[styles.section, className, "vertical"].join(" ")}>
-                <div className="horizontal">
-                    <div className={styles.player}>
-                        <div>
-                            <Player
-                                url={gameUrl}
-                                width={513}
-                                height={384}
-                                scale={1.5}
-                                autoPlay={true}
-                                onMount={this.handleMount}
-                                onUnmount={this.handleUnmount}
+                <div className="container">
+                    <div className="row justify-content-center align-items-center gy-4">
+                        <div className="col-12 col-sm-auto">
+                            <div className={styles.player}>
+                                <div>
+                                    <iframe
+                                        src={`/embed/game/${game.id}`}
+                                        width={game.width / game.scale}
+                                        style={{
+                                            aspectRatio: `${game.width}/${game.height}`
+                                        }}
+                                    />
+                                </div>
+                            </div>
+                        </div>
+                        <div className="col-12 col-lg-6">
+                            <Editor
+                                className={styles.editor}
+                                url={agentUrl}
+                                width="100%"
+                                height="500px"
+                                onLoad={this.handleLoad}
+                                onUnload={this.handleUnload}
                             />
                         </div>
-                    </div>
-                    <div>
-                        <Editor
-                            className={styles.editor}
-                            url={agentUrl}
-                            width="500px"
-                            height="500px"
-                            onLoad={this.handleLoad}
-                            onUnload={this.handleUnload}
-                        />
                     </div>
                 </div>
             </div>

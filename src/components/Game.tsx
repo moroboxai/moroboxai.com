@@ -1,18 +1,10 @@
 import React from "react";
 import ReactMarkdown from "react-markdown";
 import PlayerSection from "@/components/PlayerSection";
+import type { GameMetadata } from "@/components/PlayerSection";
 import styles from "./Game.module.scss";
 
 const RANDOM_AGENT_URL = process.env.NEXT_PUBLIC_RANDOM_AGENT_URL;
-
-export interface GameMetadata {
-    id: string;
-    title: string;
-    href: string;
-    url: string;
-    preview: string;
-    date: Date;
-}
 
 type GameProps = {
     className?: string;
@@ -34,7 +26,7 @@ class Game extends React.Component<GameProps> {
             <>
                 <PlayerSection
                     className="top-section"
-                    gameUrl={game.url}
+                    game={game}
                     agentUrl={RANDOM_AGENT_URL}
                 />
                 <div className={styles.readme}>

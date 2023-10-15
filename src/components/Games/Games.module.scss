@@ -1,8 +1,12 @@
-@import "@/components/Variables";
+@import "@/components/Common";
 
 .section {
     // Fill the top part of the screen
     flex-grow: 1;
-    padding-top: $games-margin-top;
     background-color: $home-player-section-background-color;
+
+    @include media-breakpoint-down(lg) {
+        padding-top: 2em;
+        padding-bottom: 2em;
+    }
 }

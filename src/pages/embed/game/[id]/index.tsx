@@ -2,10 +2,11 @@
 
 import fs from "fs";
 
-import React from "react";
+import React, { ReactElement } from "react";
 import { remark } from "remark";
 import dynamic from "next/dynamic";
 import type { InferGetStaticPropsType } from "next";
+import Layout from "@/embedLayout";
 import { collectGame } from "@/lib/utils";
 import { getStaticProps as getStaticGames } from "@/pages/games";
 
@@ -46,13 +47,16 @@ export async function getStaticPaths() {
     return result;
 }
 
-const Game = dynamic(() => import("@/components/Games/Game"), {
+const Game = dynamic(() => import("@/components/Embed/Game"), {
     ssr: false
 });
 
-export default function GamePage({
-    game,
-    readme
+export default function EmbedGamePage({
+    game
 }: InferGetStaticPropsType<typeof getStaticProps>) {
-    return <Game game={game} readme={readme} />;
+    return <Game url={game.url} autoPlay={true} />;
 }
+
+EmbedGamePage.getLayout = function getLayout(page: ReactElement) {
+    return <Layout>{page}</Layout>;
+};

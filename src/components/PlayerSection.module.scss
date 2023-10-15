@@ -2,25 +2,37 @@
 
 .section {
     background-color: $home-player-section-background-color;
+
+    @include media-breakpoint-down(lg) {
+        padding-top: 2em;
+        padding-bottom: 2em;
+    }
 }
 
 .player {
     box-shadow: 5px 5px 0px $player-shadow-color;
-}
 
-.player>div {
-    background-color: $player-background-color;
-    padding: 10px;
-}
+    >div {
+        background-color: $player-background-color;
+        padding: 10px;
+    }
 
-.player .mai-player {
-    display: block;
-    background-color: black;
-    border-radius: 8px;
+    iframe {
+        border: none;
+
+        @include media-breakpoint-down(sm) {
+            width: 100% !important;
+        }
+    }
+
+    .mai-player {
+        display: block;
+        background-color: black;
+        border-radius: 8px;
+    }
 }
 
 .editor {
-    margin-left: 2em;
     background-color: $editor-background-color;
     box-shadow: 5px 5px 0px $editor-shadow-color;
     padding: 10px;

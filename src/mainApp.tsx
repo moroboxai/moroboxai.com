@@ -4,6 +4,8 @@ import React from "react";
 import { BrowserRouter as Router } from "react-router-dom";
 import ScrollToTop from "react-scroll-to-top";
 import dynamic from "next/dynamic";
+import { Provider } from "react-redux";
+import store from "@/redux/store";
 
 const Menu = dynamic(() => import("@/components/Menu"), { ssr: false });
 
@@ -21,13 +23,15 @@ class App extends React.Component<AppProps> {
     render() {
         return (
             <React.StrictMode>
-                <Router>
-                    <div className="App">
-                        <Menu />
-                        {this.props.children}
-                        <ScrollToTop smooth />
-                    </div>
-                </Router>
+                <Provider store={store}>
+                    <Router>
+                        <div className="App">
+                            <Menu />
+                            {this.props.children}
+                            <ScrollToTop smooth />
+                        </div>
+                    </Router>
+                </Provider>
             </React.StrictMode>
         );
     }

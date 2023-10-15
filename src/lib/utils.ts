@@ -1,9 +1,8 @@
 import fs from "fs";
 import path from "path";
 import YAML from "yaml";
-
+import type { GameMetadata } from "@/components/PlayerSection";
 import type { GameHeader } from "moroboxai-game-sdk";
-import type { GameMetadata } from "@/components/Games";
 
 const GAMES_URL = process.env.NEXT_PUBLIC_GAMES_URL;
 
@@ -26,9 +25,11 @@ export function collectGame(dir: string, id: string): Promise<GameMetadata> {
         if (
             header.id === undefined ||
             header.title === undefined ||
+            header.width === undefined ||
+            header.height === undefined ||
             header.date === undefined
         ) {
-            return;
+            throw `incomplete ${headerFile}`;
         }
 
         const url = `${GAMES_URL}/${header.id}`;
@@ -36,9 +37,12 @@ export function collectGame(dir: string, id: string): Promise<GameMetadata> {
         return resolve({
             id: id,
             title: header.title,
-            href: `/games/${header.id}`,
+            href: `/game/${header.id}`,
             url: `${url}/header.yml`,
-            preview: `${url}/assets/preview.png`,
+            previewUrl: `${url}/assets/preview.png`,
+            width: header.width,
+            height: header.height,
+            scale: header.scale ?? 1,
             date: header.date
         });
     });
@@ -50,16 +54,14 @@ export function collectGames(dir: string): Promise<GameMetadata[]> {
         fs.readdir(dir, async (_, files) => {
             const result: GameMetadata[] = [];
 
-            await Promise.all(
+            await Promise.allSettled(
                 files.map(async (file) => {
                     // Check if header.yml exists
                     const gameDir = path.join(dir, file);
                     const headerFile = path.join(gameDir, "header.yml");
-                    if (!fs.existsSync(headerFile)) {
-                        return;
+                    if (fs.existsSync(headerFile)) {
+                        result.push(await collectGame(dir, file));
                     }
-
-                    result.push(await collectGame(dir, file));
                 })
             );
 
