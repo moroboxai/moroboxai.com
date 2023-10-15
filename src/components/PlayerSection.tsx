@@ -46,6 +46,7 @@ class PlayerSection extends React.Component<
     PlayerSectionState
 > {
     static propTypes: any;
+    private _refIframe: React.RefObject<HTMLIFrameElement>;
 
     constructor(props: any) {
         super(props);
@@ -55,6 +56,8 @@ class PlayerSection extends React.Component<
         this.handleUnmount = this.handleUnmount.bind(this);
         this.handleLoad = this.handleLoad.bind(this);
         this.handleUnload = this.handleUnload.bind(this);
+
+        this._refIframe = React.createRef<HTMLIFrameElement>();
     }
 
     handleMount(player: IPlayer) {
@@ -69,7 +72,8 @@ class PlayerSection extends React.Component<
 
     handleLoad(language: Language, value: string): void {
         console.log("load", language, value);
-        this.state.player?.getController(0)?.loadAgent({
+        this._refIframe.current?.contentWindow?.postMessage({
+            action: "LOAD_AGENT",
             language,
             code: value
         });
@@ -90,6 +94,7 @@ class PlayerSection extends React.Component<
                             <div className={styles.player}>
                                 <div>
                                     <iframe
+                                        ref={this._refIframe}
                                         src={`/embed/game/${game.id}`}
                                         width={game.width / game.scale}
                                         style={{

@@ -24,12 +24,17 @@ class Game extends React.Component<GameProps, GameState> {
         this.state = {};
         this.handleMount = this.handleMount.bind(this);
         this.handleUnmount = this.handleUnmount.bind(this);
+        this.handleMessage = this.handleMessage.bind(this);
     }
 
     componentDidMount(): void {
         // Hook PixiMoroxel8AI and Moroxel8AI
         (window as any).PixiMoroxel8AI = PixiMoroxel8AI;
         (window as any).Moroxel8AI = Moroxel8AI;
+
+        // Listen to messages
+        window.addEventListener("message", this.handleMessage);
+
         document
             .getElementsByTagName("html")[0]
             .setAttribute("data-theme", "embed");
@@ -43,6 +48,23 @@ class Game extends React.Component<GameProps, GameState> {
     handleUnmount(_: IPlayer) {
         console.log("player unmounted");
         this.setState({ player: undefined });
+    }
+
+    handleMessage(ev: MessageEvent) {
+        if (ev.data.action === undefined) {
+            return;
+        }
+
+        switch (ev.data.action) {
+            case "LOAD_AGENT":
+                if (ev.data.code !== undefined) {
+                    this.state.player?.getController(0)?.loadAgent({
+                        language: ev.data.language ?? "javascript",
+                        code: ev.data.code
+                    });
+                }
+                break;
+        }
     }
 
     render() {
