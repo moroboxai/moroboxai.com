@@ -5,6 +5,9 @@ import * as Moroxel8AI from "moroxel8ai";
 import * as PixiMoroxel8AI from "piximoroxel8ai";
 //import styles from "./Game.module.scss";
 
+export const LOAD_AGENT = "LOAD_AGENT";
+export const UNLOAD_AGENT = "UNLOAD_AGENT";
+
 type GameProps = {
     className?: string;
     url: string;
@@ -56,13 +59,16 @@ class Game extends React.Component<GameProps, GameState> {
         }
 
         switch (ev.data.action) {
-            case "LOAD_AGENT":
+            case LOAD_AGENT:
                 if (ev.data.code !== undefined) {
                     this.state.player?.getController(0)?.loadAgent({
                         language: ev.data.language ?? "javascript",
                         code: ev.data.code
                     });
                 }
+                break;
+            case UNLOAD_AGENT:
+                this.state.player?.getController(0)?.unloadAgent();
                 break;
         }
     }
@@ -71,7 +77,7 @@ class Game extends React.Component<GameProps, GameState> {
         return (
             <Player
                 url={this.props.url}
-                autoPlay={this.props.autoPlay}
+                autoPlay={false}
                 onMount={this.handleMount}
                 onUnmount={this.handleUnmount}
             />

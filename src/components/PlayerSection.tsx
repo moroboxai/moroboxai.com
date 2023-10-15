@@ -5,6 +5,7 @@ import Editor from "moroboxai-editor-react";
 import { Dispatch } from "redux";
 import { connect, ConnectedProps } from "react-redux";
 import { Actions } from "@/redux/actions/types";
+import { LOAD_AGENT, UNLOAD_AGENT } from "@/components/Embed/Game";
 import styles from "./PlayerSection.module.scss";
 
 export interface GameMetadata {
@@ -71,16 +72,17 @@ class PlayerSection extends React.Component<
     }
 
     handleLoad(language: Language, value: string): void {
-        console.log("load", language, value);
         this._refIframe.current?.contentWindow?.postMessage({
-            action: "LOAD_AGENT",
+            action: LOAD_AGENT,
             language,
             code: value
         });
     }
 
     handleUnload(): void {
-        this.state.player?.getController(0)?.unloadAgent();
+        this._refIframe.current?.contentWindow?.postMessage({
+            action: UNLOAD_AGENT
+        });
     }
 
     render() {
