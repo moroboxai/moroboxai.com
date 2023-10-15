@@ -49,7 +49,7 @@ export function collectGame(dir: string, id: string): Promise<GameMetadata> {
 }
 
 export function collectGames(dir: string): Promise<GameMetadata[]> {
-    // Read directories under games repository
+    // Read games under games repository
     return new Promise<GameMetadata[]>((resolve) => {
         fs.readdir(dir, async (_, files) => {
             const result: GameMetadata[] = [];
