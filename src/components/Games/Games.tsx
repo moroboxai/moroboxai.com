@@ -19,7 +19,7 @@ class Games extends React.Component<GamesProps> {
         return (
             <div className={[styles.section, "top-section"].join(" ")}>
                 <div className="container">
-                    <div className="row gy-4">
+                    <div className="row gy-4 m-auto">
                         {this.props.games.map((game) => (
                             <div
                                 className="col-12 col-sm-6 col-md-4 col-lg-3"

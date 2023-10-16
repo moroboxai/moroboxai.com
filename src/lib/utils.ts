@@ -38,7 +38,7 @@ export function collectGame(dir: string, id: string): Promise<GameMetadata> {
             id: id,
             title: header.title,
             href: `/game/${header.id}`,
-            url: `${url}/header.yml`,
+            url,
             previewUrl: `${url}/assets/preview.png`,
             width: header.width,
             height: header.height,

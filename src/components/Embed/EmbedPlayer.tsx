@@ -1,32 +1,30 @@
 import React from "react";
 import type { IPlayer } from "moroboxai-player-sdk";
-import Player from "moroboxai-player-react";
+import * as MoroboxAIPlayer from "moroboxai-player-web";
 import * as Moroxel8AI from "moroxel8ai";
 import * as PixiMoroxel8AI from "piximoroxel8ai";
-//import styles from "./Game.module.scss";
+
+const GAMES_URL = process.env.NEXT_PUBLIC_GAMES_URL;
 
 export const LOAD_AGENT = "LOAD_AGENT";
 export const UNLOAD_AGENT = "UNLOAD_AGENT";
 
-type GameProps = {
+type EmbedPlayerProps = {
     className?: string;
-    url: string;
-    autoPlay: boolean;
 };
 
-type GameState = {
+type EmbedPlayerState = {
+    // Instance of the raw player
     player?: IPlayer;
 };
 
-class Game extends React.Component<GameProps, GameState> {
+class EmbedPlayer extends React.Component<EmbedPlayerProps, EmbedPlayerState> {
     static propTypes: any;
 
     constructor(props: any) {
         super(props);
 
         this.state = {};
-        this.handleMount = this.handleMount.bind(this);
-        this.handleUnmount = this.handleUnmount.bind(this);
         this.handleMessage = this.handleMessage.bind(this);
     }
 
@@ -38,19 +36,37 @@ class Game extends React.Component<GameProps, GameState> {
         // Listen to messages
         window.addEventListener("message", this.handleMessage);
 
+        // Change the theme of the page for correct CSS
         document
             .getElementsByTagName("html")[0]
             .setAttribute("data-theme", "embed");
+
+        // Create the player
+        const frameElement = window.frameElement;
+        const allow = (frameElement?.getAttribute("allow") ?? "")
+            .split(";")
+            .map((value) => value.trim());
+
+        const gameId = frameElement?.getAttribute("data-game-id");
+        const url =
+            gameId !== undefined
+                ? `${GAMES_URL}/${gameId}`
+                : frameElement?.getAttribute("data-game-url") ?? "";
+
+        const player = MoroboxAIPlayer.init({
+            element: document.getElementById("player")!,
+            url,
+            autoPlay: allow.includes("autoplay")
+        }) as IPlayer;
+
+        this.setState({
+            player
+        });
     }
 
-    handleMount(player: IPlayer) {
-        console.log("player mounted");
-        this.setState({ player });
-    }
-
-    handleUnmount(_: IPlayer) {
-        console.log("player unmounted");
-        this.setState({ player: undefined });
+    componentWillUnmount(): void {
+        window.removeEventListener("message", this.handleMessage);
+        this.state.player?.remove();
     }
 
     handleMessage(ev: MessageEvent) {
@@ -74,17 +90,10 @@ class Game extends React.Component<GameProps, GameState> {
     }
 
     render() {
-        return (
-            <Player
-                url={this.props.url}
-                autoPlay={false}
-                onMount={this.handleMount}
-                onUnmount={this.handleUnmount}
-            />
-        );
+        return <div id="player"></div>;
     }
 }
 
-Game.propTypes = {};
+EmbedPlayer.propTypes = {};
 
-export default Game;
+export default EmbedPlayer;

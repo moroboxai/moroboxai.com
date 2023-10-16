@@ -5,7 +5,7 @@ import Editor from "moroboxai-editor-react";
 import { Dispatch } from "redux";
 import { connect, ConnectedProps } from "react-redux";
 import { Actions } from "@/redux/actions/types";
-import { LOAD_AGENT, UNLOAD_AGENT } from "@/components/Embed/Game";
+import { LOAD_AGENT, UNLOAD_AGENT } from "@/components/Embed/EmbedPlayer";
 import styles from "./PlayerSection.module.scss";
 
 export interface GameMetadata {
@@ -91,13 +91,15 @@ class PlayerSection extends React.Component<
         return (
             <div className={[styles.section, className, "vertical"].join(" ")}>
                 <div className="container">
-                    <div className="row justify-content-center align-items-center gy-4">
+                    <div className="row justify-content-center align-items-center gy-4 m-auto">
                         <div className="col-12 col-sm-auto">
                             <div className={styles.player}>
                                 <div>
                                     <iframe
                                         ref={this._refIframe}
-                                        src={`/embed/game/${game.id}`}
+                                        src={`/embed/player`}
+                                        data-game-id={game.id}
+                                        allow="autoplay"
                                         width={game.width / game.scale}
                                         style={{
                                             aspectRatio: `${game.width}/${game.height}`

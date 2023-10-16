@@ -17,7 +17,6 @@ class Home extends React.Component<HomeProps> {
     }
 
     render() {
-        console.log(this.props.game);
         return (
             <PlayerSection
                 className="top-section"
