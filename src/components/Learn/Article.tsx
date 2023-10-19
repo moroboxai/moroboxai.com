@@ -1,5 +1,7 @@
 import React from "react";
+import PlayerSection from "@/components/PlayerSection";
 import ReactMarkdown from "react-markdown";
+import { MDXRemote } from "next-mdx-remote";
 import remarkGfm from "remark-gfm";
 import rehypeRaw from "rehype-raw";
 import rehypeHighlight from "rehype-highlight";
@@ -21,29 +23,21 @@ class Article extends React.Component<ArticleProps> {
     }
 
     render() {
-        let content = "";
-
-        if (
-            this.props.category === undefined ||
-            this.props.article === undefined
-        ) {
-            content = this.props.structure.rootContent;
-        } else {
-            content = this.props.structure.categories
-                .find((category) => category.id === this.props.category)!
-                .articles.find(
-                    (article) => article.id === this.props.article
-                )!.content;
-        }
-
-        return (
-            <div className={styles.article}>
-                <ReactMarkdown
+        /**
+         * 
                     rehypePlugins={[rehypeRaw, rehypeHighlight]}
                     remarkPlugins={[remarkGfm]}
                 >
                     {content}
-                </ReactMarkdown>
+                </MDXRemote>
+         */
+
+        return (
+            <div className={styles.article}>
+                <MDXRemote
+                    {...this.props.structure.mdxSource!}
+                    components={{ PlayerSection }}
+                />
             </div>
         );
     }

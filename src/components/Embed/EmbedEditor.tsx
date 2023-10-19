@@ -10,6 +10,9 @@ type EmbedEditorProps = {
 
 type EmbedEditorState = {};
 
+/**
+ * Editor embedded into an iframe.
+ */
 class EmbedEditor extends React.Component<EmbedEditorProps, EmbedEditorState> {
     static propTypes: any;
 

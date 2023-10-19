@@ -1,5 +1,6 @@
 import React from "react";
 import Link from "next/link";
+import { MDXRemoteSerializeResult } from "next-mdx-remote";
 import styles from "./TOC.module.scss";
 
 export interface Section {
@@ -9,20 +10,27 @@ export interface Section {
 
 export interface Article {
     id: string;
+    path: string;
     title: string;
     sections: Section[];
-    content: string;
 }
 
 export interface Category {
     id: string;
+    path: string;
     title: string;
     articles: Article[];
 }
 
 export interface Structure {
+    // All categories
     categories: Category[];
-    rootContent: string;
+    // Current category
+    category?: Category;
+    // Current article
+    article?: Article;
+    // Content of the article
+    mdxSource?: MDXRemoteSerializeResult;
 }
 type TOCProps = {
     className?: string;

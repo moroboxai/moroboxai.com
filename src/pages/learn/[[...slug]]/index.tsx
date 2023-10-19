@@ -9,7 +9,9 @@ import remarkMdx from "remark-mdx";
 import type { InferGetStaticPropsType } from "next";
 import { useRouter } from "next/router";
 import dynamic from "next/dynamic";
-import type { Article, Structure } from "@/components/Learn";
+import { serialize } from "next-mdx-remote/serialize";
+import { MDXRemoteSerializeResult } from "next-mdx-remote";
+import type { Article, Category, Structure } from "@/components/Learn";
 
 const RE_HEADER = /^\# (\w+)$/g;
 
@@ -27,26 +29,25 @@ function collectArticles(dir: string): Promise<Article[]> {
 
             await Promise.all(
                 files.map(async (file) => {
-                    if (!file.endsWith(".md")) {
+                    if (!file.endsWith(".mdx")) {
                         return;
                     }
 
                     const content = fs.readFileSync(path.join(dir, file));
                     const results = [...content.toString().matchAll(RE_HEADER)];
-
-                    file = file.substring(
+                    const id = file.substring(
                         file.indexOf("- ") + 2,
-                        file.length - 3
+                        file.length - 4
                     );
 
                     articles.push({
-                        id: file,
-                        title: idToTitle(file),
+                        id,
+                        path: file,
+                        title: idToTitle(id),
                         sections: results.map((value) => ({
                             id: value[1],
                             title: value[1]
-                        })),
-                        content: String(await remark().process(content))
+                        }))
                     });
                 })
             );
@@ -60,10 +61,12 @@ function collectStructure(dir: string): Promise<Structure> {
     // Read directories under learn repository
     return new Promise<Structure>((resolve) => {
         fs.readdir(dir, async (_, files) => {
-            const rootContent = fs.readFileSync(path.join(dir, "README.md"));
+            const rootContent = fs
+                .readFileSync(path.join(dir, "README.md"))
+                .toString();
             const result: Structure = {
                 categories: [],
-                rootContent: String(await remark.process(rootContent))
+                mdxSource: await serialize(rootContent)
             };
 
             await Promise.all(
@@ -74,12 +77,13 @@ function collectStructure(dir: string): Promise<Structure> {
                         return;
                     }
 
-                    file = file.substring(file.indexOf("- ") + 2);
+                    const id = file.substring(file.indexOf("- ") + 2);
 
                     // Read articles for that directory
                     result.categories.push({
-                        id: file,
-                        title: idToTitle(file),
+                        id,
+                        path: file,
+                        title: idToTitle(id),
                         articles: await collectArticles(_dir)
                     });
                 })
@@ -90,13 +94,50 @@ function collectStructure(dir: string): Promise<Structure> {
     });
 }
 
+function fillArticle(
+    dir: string,
+    structure: Structure,
+    slug?: string[]
+): Promise<void> {
+    return new Promise<void>(async (resolve) => {
+        if (slug === undefined || slug.length !== 2) {
+            return resolve();
+        }
+
+        const category = structure.categories.find(
+            (category) => category.id === slug[0]
+        );
+        if (category === undefined) {
+            return resolve();
+        }
+
+        structure.category = category;
+        const article = category.articles.find(
+            (article) => article.id === slug[1]
+        );
+        if (article === undefined) {
+            return resolve();
+        }
+
+        structure.article = article;
+        const content = fs
+            .readFileSync(path.join(dir, category.path, article.path))
+            .toString();
+        structure.mdxSource = await serialize(content);
+        return resolve();
+    });
+}
+
 /**
  * Get static data for learn articles.
  */
-export async function getStaticProps() {
+export async function getStaticProps(context: any) {
+    const structure = await collectStructure("src/learn");
+    fillArticle("src/learn", structure, context.params.slug);
+
     return {
         props: {
-            structure: await collectStructure("src/learn")
+            structure
         }
     };
 }
@@ -105,7 +146,7 @@ export async function getStaticProps() {
  * Get static paths to learn articles.
  */
 export async function getStaticPaths() {
-    const { props } = await getStaticProps();
+    const structure = await collectStructure("src/learn");
     const result: {
         paths: any[];
         fallback: boolean;
@@ -115,7 +156,7 @@ export async function getStaticPaths() {
         fallback: false
     };
 
-    props.structure.categories.forEach((category) => {
+    structure.categories.forEach((category) => {
         // Add a path for the category
         result.paths.push({ params: { slug: [category.id] } });
 

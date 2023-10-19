@@ -6,6 +6,7 @@ import { Dispatch } from "redux";
 import { connect, ConnectedProps } from "react-redux";
 import { Actions } from "@/redux/actions/types";
 import { LOAD_AGENT, UNLOAD_AGENT } from "@/components/Embed/EmbedPlayer";
+import IFramePlayer from "@/components/Embed/IFramePlayer";
 import styles from "./PlayerSection.module.scss";
 
 export interface GameMetadata {
@@ -47,7 +48,7 @@ class PlayerSection extends React.Component<
     PlayerSectionState
 > {
     static propTypes: any;
-    private _refIframe: React.RefObject<HTMLIFrameElement>;
+    private _refPlayer: React.RefObject<IFramePlayer>;
 
     constructor(props: any) {
         super(props);
@@ -58,7 +59,7 @@ class PlayerSection extends React.Component<
         this.handleLoad = this.handleLoad.bind(this);
         this.handleUnload = this.handleUnload.bind(this);
 
-        this._refIframe = React.createRef<HTMLIFrameElement>();
+        this._refPlayer = React.createRef<IFramePlayer>();
     }
 
     handleMount(player: IPlayer) {
@@ -72,17 +73,11 @@ class PlayerSection extends React.Component<
     }
 
     handleLoad(language: Language, value: string): void {
-        this._refIframe.current?.contentWindow?.postMessage({
-            action: LOAD_AGENT,
-            language,
-            code: value
-        });
+        this._refPlayer.current?.loadAgent(language, value);
     }
 
     handleUnload(): void {
-        this._refIframe.current?.contentWindow?.postMessage({
-            action: UNLOAD_AGENT
-        });
+        this._refPlayer.current?.unloadAgent();
     }
 
     render() {
@@ -95,15 +90,12 @@ class PlayerSection extends React.Component<
                         <div className="col-12 col-sm-auto">
                             <div className={styles.player}>
                                 <div>
-                                    <iframe
-                                        ref={this._refIframe}
-                                        src={`/embed/player`}
-                                        data-game-id={game.id}
-                                        allow="autoplay"
+                                    <IFramePlayer
+                                        ref={this._refPlayer}
+                                        gameId={game.id}
+                                        autoPlay={true}
                                         width={game.width / game.scale}
-                                        style={{
-                                            aspectRatio: `${game.width}/${game.height}`
-                                        }}
+                                        aspectRatio={`${game.width}/${game.height}`}
                                     />
                                 </div>
                             </div>

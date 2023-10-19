@@ -18,6 +18,9 @@ type EmbedPlayerState = {
     player?: IPlayer;
 };
 
+/**
+ * Player embedded into an iframe.
+ */
 class EmbedPlayer extends React.Component<EmbedPlayerProps, EmbedPlayerState> {
     static propTypes: any;
 
