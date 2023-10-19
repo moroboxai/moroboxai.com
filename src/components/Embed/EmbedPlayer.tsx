@@ -1,6 +1,6 @@
 import React from "react";
 import type { IPlayer } from "moroboxai-player-sdk";
-import * as MoroboxAIPlayer from "moroboxai-player-web";
+import Player from "moroboxai-player-react";
 import * as Moroxel8AI from "moroxel8ai";
 import * as PixiMoroxel8AI from "piximoroxel8ai";
 
@@ -26,6 +26,8 @@ class EmbedPlayer extends React.Component<EmbedPlayerProps, EmbedPlayerState> {
 
         this.state = {};
         this.handleMessage = this.handleMessage.bind(this);
+        this.handleMount = this.handleMount.bind(this);
+        this.handleUnmount = this.handleUnmount.bind(this);
     }
 
     componentDidMount(): void {
@@ -40,37 +42,14 @@ class EmbedPlayer extends React.Component<EmbedPlayerProps, EmbedPlayerState> {
         document
             .getElementsByTagName("html")[0]
             .setAttribute("data-theme", "embed");
-
-        // Create the player
-        const frameElement = window.frameElement;
-        const allow = (frameElement?.getAttribute("allow") ?? "")
-            .split(";")
-            .map((value) => value.trim());
-
-        const gameId = frameElement?.getAttribute("data-game-id");
-        const url =
-            gameId !== undefined
-                ? `${GAMES_URL}/${gameId}`
-                : frameElement?.getAttribute("data-game-url") ?? "";
-
-        const player = MoroboxAIPlayer.init({
-            element: document.getElementById("player")!,
-            url,
-            autoPlay: allow.includes("autoplay")
-        }) as IPlayer;
-
-        this.setState({
-            player
-        });
     }
 
     componentWillUnmount(): void {
         window.removeEventListener("message", this.handleMessage);
-        this.state.player?.remove();
     }
 
     handleMessage(ev: MessageEvent) {
-        if (ev.data.action === undefined) {
+        if (ev.data.action === undefined || this.state.player === undefined) {
             return;
         }
 
@@ -89,8 +68,35 @@ class EmbedPlayer extends React.Component<EmbedPlayerProps, EmbedPlayerState> {
         }
     }
 
+    handleMount(player: IPlayer) {
+        this.setState({ player });
+    }
+
+    handleUnmount() {
+        this.setState({ player: undefined });
+    }
+
     render() {
-        return <div id="player"></div>;
+        // Get attributes from iframe
+        const frameElement = window.frameElement;
+        const allow = (frameElement?.getAttribute("allow") ?? "")
+            .split(";")
+            .map((value) => value.trim());
+
+        const gameId = frameElement?.getAttribute("data-game-id");
+        const url =
+            gameId !== undefined
+                ? `${GAMES_URL}/${gameId}`
+                : frameElement?.getAttribute("data-game-url") ?? "";
+
+        return (
+            <Player
+                url={url}
+                autoPlay={allow.includes("autoplay")}
+                onMount={this.handleMount}
+                onUnmount={this.handleUnmount}
+            />
+        );
     }
 }
 

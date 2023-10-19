@@ -5,6 +5,7 @@ import path from "path";
 
 import React from "react";
 import { remark } from "remark";
+import remarkMdx from "remark-mdx";
 import type { InferGetStaticPropsType } from "next";
 import { useRouter } from "next/router";
 import dynamic from "next/dynamic";
@@ -45,7 +46,7 @@ function collectArticles(dir: string): Promise<Article[]> {
                             id: value[1],
                             title: value[1]
                         })),
-                        content: String(await remark.process(content))
+                        content: String(await remark().process(content))
                     });
                 })
             );

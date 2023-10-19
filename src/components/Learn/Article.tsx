@@ -1,5 +1,8 @@
 import React from "react";
 import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
+import rehypeRaw from "rehype-raw";
+import rehypeHighlight from "rehype-highlight";
 import type { Structure } from "./TOC";
 import styles from "./Article.module.scss";
 
@@ -35,7 +38,12 @@ class Article extends React.Component<ArticleProps> {
 
         return (
             <div className={styles.article}>
-                <ReactMarkdown>{content}</ReactMarkdown>
+                <ReactMarkdown
+                    rehypePlugins={[rehypeRaw, rehypeHighlight]}
+                    remarkPlugins={[remarkGfm]}
+                >
+                    {content}
+                </ReactMarkdown>
             </div>
         );
     }
