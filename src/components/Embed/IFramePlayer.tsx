@@ -1,6 +1,7 @@
 import React from "react";
-import type { Language } from "moroboxai-editor-sdk";
-import { LOAD_AGENT, UNLOAD_AGENT } from "./EmbedPlayer";
+import type { LoadAgentOptions } from "moroboxai-player-sdk";
+import { EAction } from "./EmbedPlayer";
+import { v4 as uuidv4 } from "uuid";
 
 type IFramePlayerProps = {
     className?: string;
@@ -12,7 +13,9 @@ type IFramePlayerProps = {
     aspectRatio?: string;
 };
 
-type IFramePlayerState = {};
+type IFramePlayerState = {
+    uuid: string;
+};
 
 /**
  * IFrame embedding a player.
@@ -27,22 +30,22 @@ class IFramePlayer extends React.Component<
     constructor(props: any) {
         super(props);
 
-        this.state = {};
+        this.state = { uuid: uuidv4() };
 
         this._refIFrame = React.createRef<HTMLIFrameElement>();
     }
 
-    loadAgent(language: Language, value: string): void {
+    loadAgent(options: LoadAgentOptions): void {
         this._refIFrame.current?.contentWindow?.postMessage({
-            action: LOAD_AGENT,
-            language,
-            code: value
+            action: EAction.LOAD_AGENT,
+            language: options.language,
+            script: options.script
         });
     }
 
     unloadAgent(): void {
         this._refIFrame.current?.contentWindow?.postMessage({
-            action: UNLOAD_AGENT
+            action: EAction.UNLOAD_AGENT
         });
     }
 
@@ -50,9 +53,11 @@ class IFramePlayer extends React.Component<
         return (
             <iframe
                 ref={this._refIFrame}
+                className={this.props.className}
                 src={`/embed/player`}
                 data-game-url={this.props.gameUrl}
                 data-game-id={this.props.gameId}
+                data-uuid={this.state.uuid}
                 allow={this.props.autoPlay === true ? "autoplay" : ""}
                 width={this.props.width}
                 height={this.props.height}

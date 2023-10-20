@@ -6,8 +6,10 @@ import * as PixiMoroxel8AI from "piximoroxel8ai";
 
 const GAMES_URL = process.env.NEXT_PUBLIC_GAMES_URL;
 
-export const LOAD_AGENT = "LOAD_AGENT";
-export const UNLOAD_AGENT = "UNLOAD_AGENT";
+export enum EAction {
+    LOAD_AGENT = "LOAD_AGENT",
+    UNLOAD_AGENT = "UNLOAD_AGENT"
+}
 
 type EmbedPlayerProps = {
     className?: string;
@@ -57,15 +59,15 @@ class EmbedPlayer extends React.Component<EmbedPlayerProps, EmbedPlayerState> {
         }
 
         switch (ev.data.action) {
-            case LOAD_AGENT:
-                if (ev.data.code !== undefined) {
+            case EAction.LOAD_AGENT:
+                if (ev.data.script !== undefined) {
                     this.state.player?.getController(0)?.loadAgent({
-                        language: ev.data.language ?? "javascript",
-                        code: ev.data.code
+                        language: ev.data.language,
+                        script: ev.data.script
                     });
                 }
                 break;
-            case UNLOAD_AGENT:
+            case EAction.UNLOAD_AGENT:
                 this.state.player?.getController(0)?.unloadAgent();
                 break;
         }

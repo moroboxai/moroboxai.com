@@ -59,38 +59,41 @@ function collectArticles(dir: string): Promise<Article[]> {
 
 function collectStructure(dir: string): Promise<Structure> {
     // Read directories under learn repository
-    return new Promise<Structure>((resolve) => {
-        fs.readdir(dir, async (_, files) => {
-            const rootContent = fs
-                .readFileSync(path.join(dir, "README.md"))
-                .toString();
-            const result: Structure = {
-                categories: [],
-                mdxSource: await serialize(rootContent)
-            };
+    return new Promise<Structure>(async (resolve) => {
+        const files = fs.readdirSync(dir);
+        const rootContent = fs
+            .readFileSync(path.join(dir, "README.md"))
+            .toString();
+        const result: Structure = {
+            categories: [],
+            mdxSource: await serialize(rootContent)
+        };
 
-            await Promise.all(
-                files.map(async (file) => {
-                    const _dir = path.join(dir, file);
-                    const stat = fs.statSync(_dir);
-                    if (!stat.isDirectory()) {
-                        return;
-                    }
+        await Promise.all(
+            files.map(async (file) => {
+                const _dir = path.join(dir, file);
+                const stat = fs.statSync(_dir);
+                if (!stat.isDirectory()) {
+                    return;
+                }
 
-                    const id = file.substring(file.indexOf("- ") + 2);
+                const id = file.substring(file.indexOf("- ") + 2);
+                const articles = await collectArticles(_dir);
+                articles.sort((a, b) => a.path.localeCompare(b.path));
 
-                    // Read articles for that directory
-                    result.categories.push({
-                        id,
-                        path: file,
-                        title: idToTitle(id),
-                        articles: await collectArticles(_dir)
-                    });
-                })
-            );
+                // Read articles for that directory
+                result.categories.push({
+                    id,
+                    path: file,
+                    title: idToTitle(id),
+                    articles
+                });
+            })
+        );
 
-            return resolve(result);
-        });
+        result.categories.sort((a, b) => a.path.localeCompare(b.path));
+
+        return resolve(result);
     });
 }
 

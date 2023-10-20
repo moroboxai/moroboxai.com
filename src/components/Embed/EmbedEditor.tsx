@@ -1,8 +1,12 @@
 import React from "react";
-import type { Language } from "moroboxai-editor-sdk";
+import type { OnRunOptions } from "moroboxai-editor-sdk";
 import Editor from "moroboxai-editor-react";
-import { LOAD_AGENT, UNLOAD_AGENT } from "./EmbedPlayer";
-import * as styles from "./EmbedEditor.module.scss";
+import styles from "./EmbedEditor.module.scss";
+
+export enum EAction {
+    RUN = "RUN",
+    STOP = "STOP"
+}
 
 type EmbedEditorProps = {
     className?: string;
@@ -20,8 +24,8 @@ class EmbedEditor extends React.Component<EmbedEditorProps, EmbedEditorState> {
         super(props);
 
         this.state = {};
-        this.handleLoad = this.handleLoad.bind(this);
-        this.handleUnload = this.handleUnload.bind(this);
+        this.handleRun = this.handleRun.bind(this);
+        this.handleStop = this.handleStop.bind(this);
     }
 
     componentDidMount(): void {
@@ -31,17 +35,24 @@ class EmbedEditor extends React.Component<EmbedEditorProps, EmbedEditorState> {
             .setAttribute("data-theme", "embed");
     }
 
-    handleLoad(language: Language, value: string) {
-        window.parent.postMessage({
-            action: LOAD_AGENT,
-            language,
-            code: value
+    handleRun(options: OnRunOptions) {
+        this.postMessage({
+            action: EAction.RUN,
+            language: options.language,
+            script: options.script
         });
     }
 
-    handleUnload() {
+    handleStop() {
+        this.postMessage({
+            action: EAction.STOP
+        });
+    }
+
+    postMessage(payload: any) {
         window.parent.postMessage({
-            action: UNLOAD_AGENT
+            ...payload,
+            uuid: window.frameElement?.getAttribute("data-uuid")
         });
     }
 
@@ -56,8 +67,8 @@ class EmbedEditor extends React.Component<EmbedEditorProps, EmbedEditorState> {
                 url={url}
                 width="100%"
                 height="100%"
-                onLoad={this.handleLoad}
-                onUnload={this.handleUnload}
+                onRun={this.handleRun}
+                onStop={this.handleStop}
             />
         );
     }

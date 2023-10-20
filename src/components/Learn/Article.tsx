@@ -1,5 +1,5 @@
 import React from "react";
-import PlayerSection from "@/components/PlayerSection";
+import PlayerEditor from "@/components/Embed/PlayerEditor";
 import ReactMarkdown from "react-markdown";
 import { MDXRemote } from "next-mdx-remote";
 import remarkGfm from "remark-gfm";
@@ -36,7 +36,7 @@ class Article extends React.Component<ArticleProps> {
             <div className={styles.article}>
                 <MDXRemote
                     {...this.props.structure.mdxSource!}
-                    components={{ PlayerSection }}
+                    components={{ PlayerEditor }}
                 />
             </div>
         );
