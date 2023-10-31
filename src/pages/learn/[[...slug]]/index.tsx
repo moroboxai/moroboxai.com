@@ -4,14 +4,11 @@ import fs from "fs";
 import path from "path";
 
 import React from "react";
-import { remark } from "remark";
-import remarkMdx from "remark-mdx";
 import type { InferGetStaticPropsType } from "next";
 import { useRouter } from "next/router";
 import dynamic from "next/dynamic";
 import { serialize } from "next-mdx-remote/serialize";
-import { MDXRemoteSerializeResult } from "next-mdx-remote";
-import type { Article, Category, Structure } from "@/components/Learn";
+import type { Article, Structure } from "@/components/Learn";
 
 const RE_HEADER = /^\# (\w+)$/g;
 

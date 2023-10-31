@@ -8,6 +8,7 @@ import { Provider } from "react-redux";
 import store from "@/redux/store";
 
 const Menu = dynamic(() => import("@/components/Menu"), { ssr: false });
+const Footer = dynamic(() => import("@/components/Footer"), { ssr: false });
 
 type AppProps = {
     children: React.ReactNode;
@@ -29,6 +30,7 @@ class App extends React.Component<AppProps> {
                             <Menu />
                             {this.props.children}
                             <ScrollToTop smooth />
+                            <Footer />
                         </div>
                     </Router>
                 </Provider>

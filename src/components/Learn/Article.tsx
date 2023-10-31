@@ -1,10 +1,6 @@
 import React from "react";
 import PlayerEditor from "@/components/Embed/PlayerEditor";
-import ReactMarkdown from "react-markdown";
 import { MDXRemote } from "next-mdx-remote";
-import remarkGfm from "remark-gfm";
-import rehypeRaw from "rehype-raw";
-import rehypeHighlight from "rehype-highlight";
 import type { Structure } from "./TOC";
 import styles from "./Article.module.scss";
 
