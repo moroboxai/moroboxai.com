@@ -1,5 +1,5 @@
 import React from "react";
-import type { OnRunOptions } from "moroboxai-editor-sdk";
+import type { OnRunOptions, IEditor } from "moroboxai-editor-sdk";
 import Editor from "moroboxai-editor-react";
 import styles from "./EmbedEditor.module.scss";
 
@@ -49,6 +49,10 @@ class EmbedEditor extends React.Component<EmbedEditorProps, EmbedEditorState> {
         });
     }
 
+    handleMount(editor: IEditor) {
+        editor.resize();
+    }
+
     postMessage(payload: any) {
         window.parent.postMessage({
             ...payload,
@@ -69,6 +73,7 @@ class EmbedEditor extends React.Component<EmbedEditorProps, EmbedEditorState> {
                 height="100%"
                 onRun={this.handleRun}
                 onStop={this.handleStop}
+                onMount={this.handleMount}
             />
         );
     }
