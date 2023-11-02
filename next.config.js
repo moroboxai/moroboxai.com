@@ -1,3 +1,6 @@
+const withBundleAnalyzer = require("@next/bundle-analyzer")({
+    enabled: false
+});
 const withMDX = require("@next/mdx")();
 
 /** @type {import('next').NextConfig} */
@@ -6,4 +9,4 @@ const nextConfig = {
     distDir: "./dist" // Changes the build output directory to `./dist/`.
 };
 
-module.exports = withMDX(nextConfig);
+module.exports = withMDX(withBundleAnalyzer(nextConfig));

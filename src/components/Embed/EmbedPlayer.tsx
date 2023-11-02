@@ -1,8 +1,6 @@
 import React from "react";
 import type { IPlayer } from "moroboxai-player-sdk";
 import Player from "moroboxai-player-react";
-import * as Moroxel8AI from "moroxel8ai";
-import * as PixiMoroxel8AI from "piximoroxel8ai";
 
 const GAMES_URL = process.env.NEXT_PUBLIC_GAMES_URL;
 
@@ -36,10 +34,6 @@ class EmbedPlayer extends React.Component<EmbedPlayerProps, EmbedPlayerState> {
     }
 
     componentDidMount(): void {
-        // Hook PixiMoroxel8AI and Moroxel8AI
-        (window as any).PixiMoroxel8AI = PixiMoroxel8AI;
-        (window as any).Moroxel8AI = Moroxel8AI;
-
         // Listen to messages
         window.addEventListener("message", this.handleMessage);
 
@@ -61,14 +55,14 @@ class EmbedPlayer extends React.Component<EmbedPlayerProps, EmbedPlayerState> {
         switch (ev.data.action) {
             case EAction.LOAD_AGENT:
                 if (ev.data.script !== undefined) {
-                    this.state.player?.getController(0)?.loadAgent({
+                    this.state.player?.loadAgent(0, {
                         language: ev.data.language,
                         script: ev.data.script
                     });
                 }
                 break;
             case EAction.UNLOAD_AGENT:
-                this.state.player?.getController(0)?.unloadAgent();
+                this.state.player?.unloadAgent(0);
                 break;
         }
     }
