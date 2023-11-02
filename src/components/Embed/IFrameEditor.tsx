@@ -5,6 +5,7 @@ import { v4 as uuidv4 } from "uuid";
 
 type IFrameEditorProps = {
     className?: string;
+    title?: string;
     url?: string;
     width?: string | number;
     height?: string | number;
@@ -74,6 +75,7 @@ class IFrameEditor extends React.Component<
             <iframe
                 ref={this._refIFrame}
                 src={`/embed/editor`}
+                title={this.props.title ?? "editor"}
                 data-agent-url={this.props.url}
                 data-uuid={this.state.uuid}
                 width={this.props.width}

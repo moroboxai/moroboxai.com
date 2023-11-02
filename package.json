@@ -59,12 +59,15 @@
         "eslint-plugin-react-hooks": "^4.6.0",
         "eslint-plugin-react-refresh": "^0.4.3",
         "next": "^13.5.4",
-        "typescript": "^5.0.2",
-        "sass": "^1.69.0"
+        "next-sitemap": "^4.2.3",
+        "sass": "^1.69.0",
+        "typescript": "^5.0.2"
     },
     "scripts": {
         "dev": "next dev",
         "build": "next build",
+        "prebuild": "npm run sitemap",
+        "sitemap": "next-sitemap",
         "start": "next start",
         "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0"
     },

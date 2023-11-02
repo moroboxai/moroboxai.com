@@ -5,6 +5,7 @@ import { v4 as uuidv4 } from "uuid";
 
 type IFramePlayerProps = {
     className?: string;
+    title?: string;
     gameUrl?: string;
     gameId?: string;
     autoPlay?: boolean;
@@ -55,6 +56,7 @@ class IFramePlayer extends React.Component<
                 ref={this._refIFrame}
                 className={this.props.className}
                 src={`/embed/player`}
+                title={this.props.title ?? "player"}
                 data-game-url={this.props.gameUrl}
                 data-game-id={this.props.gameId}
                 data-uuid={this.state.uuid}
