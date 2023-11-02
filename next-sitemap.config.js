@@ -24,7 +24,8 @@ const config = {
                 disallow: NEXT_SSG_FILES
             }
         ]
-    }
+    },
+    outDir: "dist"
 };
 
 module.exports = config;
