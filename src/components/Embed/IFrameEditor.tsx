@@ -80,6 +80,7 @@ class IFrameEditor extends React.Component<
                 data-uuid={this.state.uuid}
                 width={this.props.width}
                 height={this.props.height}
+                loading="lazy"
             />
         );
     }

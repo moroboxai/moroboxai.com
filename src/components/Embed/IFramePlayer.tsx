@@ -66,6 +66,7 @@ class IFramePlayer extends React.Component<
                 style={{
                     aspectRatio: this.props.aspectRatio
                 }}
+                loading="lazy"
             />
         );
     }

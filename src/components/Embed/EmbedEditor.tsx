@@ -1,7 +1,11 @@
+import dynamic from "next/dynamic";
 import React from "react";
 import type { OnRunOptions, IEditor } from "moroboxai-editor-sdk";
-import Editor from "moroboxai-editor-react";
 import styles from "./EmbedEditor.module.scss";
+
+const Editor = dynamic(() => import("moroboxai-editor-react"), {
+    ssr: false
+});
 
 export enum EAction {
     RUN = "RUN",

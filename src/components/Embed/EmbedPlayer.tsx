@@ -1,6 +1,8 @@
-import React from "react";
+import React, { Suspense, lazy } from "react";
 import type { IPlayer } from "moroboxai-player-sdk";
-import Player from "moroboxai-player-react";
+import styles from "./EmbedPlayer.module.scss";
+
+const Player = lazy(() => import("moroboxai-player-react"));
 
 const GAMES_URL = process.env.NEXT_PUBLIC_GAMES_URL;
 
@@ -89,12 +91,14 @@ class EmbedPlayer extends React.Component<EmbedPlayerProps, EmbedPlayerState> {
                 : frameElement?.getAttribute("data-game-url") ?? "";
 
         return (
-            <Player
-                url={url}
-                autoPlay={allow.includes("autoplay")}
-                onMount={this.handleMount}
-                onUnmount={this.handleUnmount}
-            />
+            <Suspense fallback={<div className={styles.placeholder}></div>}>
+                <Player
+                    url={url}
+                    autoPlay={allow.includes("autoplay")}
+                    onMount={this.handleMount}
+                    onUnmount={this.handleUnmount}
+                />
+            </Suspense>
         );
     }
 }
