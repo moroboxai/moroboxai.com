@@ -1,11 +1,5 @@
-import type { Metadata } from "next";
 import React from "react";
 import dynamic from "next/dynamic";
-
-export const metadata: Metadata = {
-    title: "MoroboxAI",
-    description: "Home of MoroboxAI"
-};
 
 const App = dynamic(() => import("./mainApp"), { ssr: false });
 

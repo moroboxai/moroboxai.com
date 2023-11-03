@@ -50,7 +50,7 @@ class Menu extends React.Component<MenuProps, MenuState> {
         return (
             <nav className={styles.menu + " " + (className || "")}>
                 <div className={styles.home}>
-                    <a href="/" aria-label="Go back to the homepage">
+                    <a href="/" aria-label="Back to the homepage">
                         <FontAwesomeIcon className="mai-fab" icon={faHome} />
                     </a>
                 </div>
@@ -73,7 +73,7 @@ class Menu extends React.Component<MenuProps, MenuState> {
                         <li>
                             <Link
                                 href="/learn"
-                                aria-label="Read the documentation"
+                                aria-label="Learn more on MoroboxAI"
                             >
                                 Learn
                             </Link>

@@ -21,7 +21,11 @@ class GamePreview extends React.Component<GamePreviewProps> {
         return (
             <Link href={game.href} className={styles.game}>
                 <div>
-                    <img src={game.previewUrl} loading="lazy"></img>
+                    <img
+                        src={game.previewUrl}
+                        alt={`preview of ${game.id} game`}
+                        loading="lazy"
+                    ></img>
                     <div className={styles.title}>{game.title}</div>
                 </div>
             </Link>

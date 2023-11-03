@@ -39,7 +39,7 @@ class Footer extends React.Component<FooterProps, FooterState> {
                                 className="btn btn-outline-light btn-floating m-1"
                                 href={GITHUB_URL}
                                 role="button"
-                                aria-label="Go to the GitHub repository"
+                                aria-label="Contribute on GitHub"
                             >
                                 <FontAwesomeIcon
                                     className="mai-fab"
